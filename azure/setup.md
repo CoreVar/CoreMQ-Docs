@@ -7,7 +7,7 @@ This guide walks you through the deployment and configuration of CoreMQ using th
 ## 1. Accessing the Azure Marketplace
 
 1. **Navigate to CoreMQ Marketplace Listing:**  
-   Open your web browser and navigate to the [Azure Portal - CoreMQ](https://portal.azure.com/#create/core-var.coremq-entry-previewcoremq-express). Sign in with your Azure credentials.
+   Open your web browser and navigate to the [Azure Portal - CoreMQ](https://portal.azure.com/#create/core-var.coremq-entrycoremq-express). Sign in with your Azure credentials.
 
 2. **Select offering:**  
    Select the "Express" plan and click "Create".
