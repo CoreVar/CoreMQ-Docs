@@ -60,7 +60,7 @@ CoreMQ is deployed on a virtual machine optimized for performance and security. 
 
 ---
 
-## 6. MQTT and Endpoint Configuration
+## 4. MQTT and Endpoint Configuration
 
 The next section allows you to configure CoreMQ’s MQTT-specific settings and endpoints:
 
@@ -92,13 +92,13 @@ Configure how your broker accepts connections:
 
 ---
 
-## 7. Resource Tagging
+## 5. Resource Tagging
 
 In the final configuration step, you can assign tags to your deployed resources. Tags help you organize and manage resources such as storage accounts, virtual machines, network interfaces, and more within your Azure environment.
 
 ---
 
-## 8. Review + create
+## 6. Review + create
 
 This page contains pricing & terms, contact information, Co-Admin Access Permission, and a summary of the deployment configuration:
 - **Basics:**
