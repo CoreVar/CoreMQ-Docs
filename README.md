@@ -42,4 +42,4 @@ CoreMQ is built for a diverse audience:
 We encourage you to begin with the Setup section to install and configure your CoreMQ broker. Once up and running, explore the RBAC and advanced configuration topics to fully leverage the power of CoreMQ for your secure communication needs.
 
 ## Related Articles
-- [Setting up for Microsoft Azure](azure/setup.md)
+- [Setting up for Microsoft Azure](/azure/setup.md)
