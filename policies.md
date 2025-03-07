@@ -2,7 +2,7 @@
 
 Policies can be defined to restrict control over publishing/subscribing to various topics.
 
-Policies exist in three scopes: global, role, and user. They are applied in that order. Within each scope, each policy can define an order (lowest-to-highest) in which it is applied within that scope. For role-based policies, because a user can have many roles assigned to them, the highest-allowed access is applied. Multiple topics can be specified for a single policy, as well as MQTT wildcards (+ and #) can be specified within the topic.
+Policies exist in three scopes: global, role, and user. They are applied in that order. Within each scope, each policy can define an order (lowest-to-highest) in which it is applied within that scope. For role-based policies, because a user can have many roles assigned to them, the highest-allowed role is applied. Multiple topics can be specified for a single policy, as well as MQTT wildcards (+ and #) can be specified within the topic.
 
 By default, no policies exist and any user can publish/subscribe to any topic. It is recommended to add a default global policy which denies publishing/subscribing to all topics.
 
@@ -27,7 +27,7 @@ Adding a global policy can be done within the CoreMQ dashboard.
 
 ## Role-based Policies
 
-Role-based policies enable policies to be configured at a role level. When a user is assigned a role, the policy is applied as a part of publish/subscribe actions. Because a user can have many roles associated with them, the highest-allowed policy is the one that is applied.
+Role-based policies enable policies to be configured at a role level. When a user is assigned a role, the policy is applied as a part of publish/subscribe actions. Because a user can have many roles associated with them, the highest-allowed role is the one that is applied.
 
 ### Add a Role-based Policy
 
@@ -53,7 +53,7 @@ Policies can be configured at the user level. These policies are the last to be 
 
 Adding a user policy can be done within the CoreMQ dashboard.
 
-#### 1. Navigate to the User's Page
+#### 1. Navigate to the User's Policies Page
 1. Click the Setup link on the left navigation bar
 2. Click the Users tab button
 3. Select the user you want to add the policy to
