@@ -2,7 +2,6 @@
 
 This guide walks you through the deployment and configuration of CoreMQ using the Azure Marketplace Express setup. By following these steps, you'll deploy a fully configured, secure MQTT broker tailored for IoT communications—all through the intuitive Azure Portal interface.
 
----
 
 ## 1. Accessing the Azure Marketplace
 
@@ -12,7 +11,6 @@ This guide walks you through the deployment and configuration of CoreMQ using th
 2. **Select offering:**  
    Select the "Express" plan and click "Create".
 
----
 
 ## 2. Basics
 
@@ -48,7 +46,6 @@ Upon selecting the Express version, you’ll be presented with the initial confi
 - **Managed Resource Group**
   This is the name of the managed resource group where all of the resources that operate CoreMQ are deployed to. This name is automatically generated, but it can be overridden if necessary.
 
----
 
 ## 3. Virtual Machine
 
@@ -58,7 +55,6 @@ CoreMQ is deployed on a virtual machine optimized for performance and security. 
   - **VM Size:**  
     Choose a VM size from the Size Selector. The VM must support premium storage. The more powerful VM you select, the more throughput CoreMQ will handle.
 
----
 
 ## 4. MQTT and Endpoint Configuration
 
@@ -90,13 +86,11 @@ Configure how your broker accepts connections:
 - **Authentication Type:**
   Basic authentication is more secure and is recommended over anonymous.
 
----
 
 ## 5. Resource Tagging
 
 In the final configuration step, you can assign tags to your deployed resources. Tags help you organize and manage resources such as storage accounts, virtual machines, network interfaces, and more within your Azure environment.
 
----
 
 ## 6. Review + create
 
@@ -124,7 +118,6 @@ After reviewing your configuration and agreeing to the terms, click **Create**. 
 
 Once deployed, your application will be availabe at the hostname you configured in the CoreMQ hostname registration step. You can login to it with the admin username and password you configured.
 
----
 
 ## Final Notes
 
