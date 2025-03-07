@@ -6,7 +6,7 @@ This guide walks you through the deployment and configuration of CoreMQ using th
 ## 1. Accessing the Azure Marketplace
 
 1. **Navigate to CoreMQ Marketplace Listing:**  
-   Open your web browser and navigate to the [Azure Portal - CoreMQ](https://portal.azure.com/#create/core-var.coremq-entrycoremq-express). Sign in with your Azure credentials.
+   Open your web browser and navigate to the [Azure Portal - CoreMQ](https://portal.azure.com/#create/core-var.coremq-entrycoremq-express){:target="_blank"}. Sign in with your Azure credentials.
 
 2. **Select offering:**  
    Select the "Express" plan and click "Create".
@@ -126,7 +126,7 @@ Once deployed, your application will be availabe at the hostname you configured 
 - **Customization:**  
   While the default settings are optimized for most scenarios, you can adjust VM sizes to meet specific requirements.
 - **Next Steps:**  
-  Once deployed, use the [Azure management portal](https://portal.azure.com) to manage the deployed resources, and use the [CoreVar Portal](https://portal.corevar.com) to manage the hostname registration.
+  Once deployed, use the [Azure management portal](https://portal.azure.com){:target="_blank"} to manage the deployed resources, and use the [CoreVar Portal](https://portal.corevar.com){:target="_blank"} to manage the hostname registration.
 
 This guide provides the essential steps to get CoreMQ running on Azure with minimal hassle. For more detailed instructions on advanced configurations and troubleshooting, refer to the additional documentation sections on our website.
 
