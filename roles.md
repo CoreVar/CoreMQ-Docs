@@ -2,6 +2,8 @@
 
 Users can be assigned roles, which will allow properties of those roles to be applied to the user.
 
+Two system roles exist: User Manager and Endpoint Manager. These roles are allowed to manage users and endpoints, respectively.
+
 ### Add a Role
 
 #### 1. Navigate to the Roles
@@ -28,3 +30,7 @@ Adding a role-based policy can be done within the CoreMQ dashboard.
 3. Set the order to a number representing the order to apply the policy, lowest-to-highest.
 4. Add any number of topics to the rule. MQTT wildcards (+ and #) can be used. A catch-all topic would be `#`
 5. Click OK.
+
+## Conclusion
+
+Role-based access control (RBAC) enables users and policies to be managed at scale.
