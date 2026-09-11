@@ -10,6 +10,10 @@ On deployments with guided CoreID registration enabled, open **Configure > Sign-
 2. Sign in to CoreID, choose an existing organization where you are a tenant administrator, and approve the broker application. Complete any required MFA.
 3. Return to the broker using the CoreID consent screen. The broker verifies an ordinary OIDC sign-in for the same issuer, subject and organization before enabling the provider.
 
+The organization is a CoreID membership boundary. It is not the broker deployment, hosting region or cloud subscription. A CoreID account can belong to several organizations; this selection binds the broker application to one eligible organization you administer. Membership alone does not grant a broker role.
+
+Cancel on the CoreID consent screen returns to the broker configuration screen and clears the pending connection. It does not approve or activate a provider.
+
 The broker registers the application and stores its credential server-side. You do not copy client IDs, secrets or subject IDs. Successful verification activates CoreID immediately, without a restart. Local roles remain authoritative; CoreID does not grant additional broker privileges.
 
 A deployment administrator enables this flow with `BrowserIdentity:CoreId:Authority` (the exact trusted HTTPS issuer, including any trailing slash) and `BrowserIdentity:CoreId:BrokerOrigin` (the broker's public HTTPS origin). CoreID must support the guided broker-registration API. These are deployment settings, not values accepted from the browser. Use a stable address for the broker handling registration; an in-progress registration is local to that process.
