@@ -22,6 +22,14 @@ Registration expires after ten minutes; the final sign-in verification has a fiv
 
 The guided flow is available in the current local development build. Live organization approval is performed by the user; this is not a claim of production or Marketplace qualification.
 
+## Accounts and permissions
+
+Guided CoreID setup links the approving identity to the existing broker account that started setup. It does not create a second user or grant administrator access merely because someone signs in through CoreID.
+
+In **Configure > Identities > Accounts**, the **Sign-in providers** column shows configured provider links. Open the broker account to see its assigned broker roles and **Linked sign-in identities**. Identity details include the issuer, organization ID and subject identifier. Provider settings pending restart are identified as saved settings.
+
+Permissions currently come from CoreMQ roles and policies. Manage local role assignments on the broker account; administrative permissions are under its Advanced tab. Certificate identities are certificate credentials, not browser sign-in accounts. CoreID organization roles are not automatically imported as broker roles. Provider-managed application roles require a separate explicit contract and mapping and are not enabled by the account-visibility display.
+
 ## Configure another provider or an existing application
 
 1. Open the broker over trusted HTTPS and select **Configure > Sign-in providers** as a User Manager.
