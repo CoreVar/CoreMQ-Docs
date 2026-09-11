@@ -8,7 +8,7 @@ On deployments with guided CoreID registration enabled, open **Configure > Sign-
 
 1. Click **Connect CoreID**. This explicitly links your CoreID identity to the local broker account you are currently using.
 2. Sign in to CoreID, choose an existing organization where you are a tenant administrator, and approve the broker application. Complete any required MFA.
-3. Return to the broker using the CoreID consent screen. The broker verifies an ordinary OIDC sign-in for the same issuer, subject and organization before enabling the provider.
+3. CoreID redirects you back to CoreMQ after approval. If the redirect does not happen within 30 seconds, select **Return to CoreMQ**. The broker verifies an ordinary OIDC sign-in for the same issuer, subject and organization before enabling the provider.
 
 The organization is a CoreID membership boundary. It is not the broker deployment, hosting region or cloud subscription. A CoreID account can belong to several organizations; this selection binds the broker application to one eligible organization you administer. Membership alone does not grant a broker role.
 
