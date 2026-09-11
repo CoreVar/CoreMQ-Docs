@@ -1,6 +1,6 @@
 # Documentation changes
 
-## 2026-09-11 â€” 0.1 development documentation
+## 2026-09-11 — 0.1 development documentation
 
 - Documented Configure navigation, dashboard activity and unified identity management.
 - Added MQTT bridges and outbound Kafka/Event Hubs/CoreStream guidance with delivery limitations.
