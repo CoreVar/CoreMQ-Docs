@@ -1,0 +1,12 @@
+# Documentation changes
+
+## 2026-09-11 — 0.1 development documentation
+
+- Documented Configure navigation, dashboard activity and unified identity management.
+- Added MQTT bridges and outbound Kafka/Event Hubs/CoreStream guidance with delivery limitations.
+- Added browser sign-in provider setup and its outstanding automated-registration/remote-management work.
+- Added system event topics, subscription permissions and delivery semantics.
+- Added CLI, CoreControl/portal coverage, feedback and MQTT 5 status guides.
+- Removed the outdated statement that only username/password authentication exists.
+
+This entry documents development behavior. It is not a Marketplace release announcement or a claim that every portal has deployed the latest controls.

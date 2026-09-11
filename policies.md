@@ -15,7 +15,7 @@ Global policies are the first policies applied for any publish/subscribe action.
 Adding a global policy can be done within the CoreMQ dashboard.
 
 #### 1. Navigate to the Global Policies
-1. Click the Setup link on the left navigation bar
+1. Click the Configure link on the left navigation bar
 2. Click the Global Policies tab button
 
 #### 2. Configure a New Global Policy
@@ -34,7 +34,7 @@ Role-based policies enable policies to be configured at a role level. When a use
 Adding a role-based policy can be done within the CoreMQ dashboard.
 
 #### 1. Navigate to the Role's Page
-1. Click the Setup link on the left navigation bar
+1. Click the Configure link on the left navigation bar
 2. Click the Roles tab button
 3. Select the role you want to add the policy to
 
@@ -54,7 +54,7 @@ Policies can be configured at the user level. These policies are the last to be 
 Adding a user policy can be done within the CoreMQ dashboard.
 
 #### 1. Navigate to the User's Policies Page
-1. Click the Setup link on the left navigation bar
+1. Click the Configure link on the left navigation bar
 2. Click the Users tab button
 3. Select the user you want to add the policy to
 4. Click the Policies tab button

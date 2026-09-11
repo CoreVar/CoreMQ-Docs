@@ -7,7 +7,7 @@ Two system roles exist: User Manager and Endpoint Manager. These roles are allow
 ### Add a Role
 
 #### 1. Navigate to the Roles
-1. Click the Setup link on the left navigation bar
+1. Click the Configure link on the left navigation bar
 2. Click the Roles tab button
 
 #### 2. Configure a new Role
@@ -20,7 +20,7 @@ Two system roles exist: User Manager and Endpoint Manager. These roles are allow
 Adding a role-based policy can be done within the CoreMQ dashboard.
 
 #### 1. Navigate to the Role's Page
-1. Click the Setup link on the left navigation bar
+1. Click the Configure link on the left navigation bar
 2. Click the Roles tab button
 3. Select the role you want to add the policy to
 

@@ -1,64 +1,19 @@
-# Users
+# Users and certificate identities
 
-Users can be configured with various types of control.
+Open **Configure > Identities**. Local user accounts and certificate identities represent principals authorized to use the broker. They are not a list of currently connected clients.
 
-## Authentication
-CoreMQ currently only supports basic authentication (username & password).
+## Create a user
 
-### Creating a New User
+Choose **Create User**, enter the account information and password, and assign the required roles. Grant **User Manager** or **Endpoint Manager** only when the account needs management access. MQTT publishing and subscribing are controlled by message policies; management privileges and message permissions serve different purposes.
 
-#### 1. Navigate to the Users Page
-1. Click the Setup link on the left navigation bar
-2. Click the Users tab button
-3. Click Add User
+Edit the account to manage its basic information, credentials, roles and policies. The technical details identify the stable local user ID, which is also used for explicit external sign-in assignments.
 
-#### 2. Configure a New User
-1. Enter the username
-2. Enter the password
-3. Confirm the password
-4. (Optionally) Add the user to the system roles: User Manager and Endpoint Manager
-5. Click OK
+## Certificate identities
 
-## Roles
+Choose **Create Identity** to configure a device or service that authenticates with a certificate. Certificate identities use backing accounts so their roles and direct message policies can be managed through the same authorization model. Configure compatible certificate authentication on the listener and the required trust material.
 
-Users can be assigned roles, giving them properties of that role.
+A **certificate authority** establishes certificate trust. It is not a user account or a connected device. Manage authorities separately under **Certificate authorities** and upload the required public certificate material.
 
-For the case of policies, because a user can have multiple roles assigned, the highest allowed role is applied.
+Authentication support depends on the listener configuration and build; CoreMQ is no longer limited to username/password authentication. External login to the management UI is described in [sign-in providers](sign-in-providers.md); that login flow is separate from MQTT client authentication.
 
-### Add a Role Assignment to a User
-
-#### 1. Navigate to the User's Basic Info Page
-1. Click the Setup link on the left navigation bar
-2. Click the Users tab button
-3. Select the user
-4. Click the Basic Info tab button
-
-#### 2. Add the Role Assignment
-1. Click the Add Role button
-2. Select the Role you want to assign
-3. When asked to confirm, click OK
-
-## Policies
-
-Users can have policies assigned to them. These policies are applied after global policies, and role policies, in that order.
-
-### Add a User Policy
-
-Adding a user policy can be done within the CoreMQ dashboard.
-
-#### 1. Navigate to the User's Policies Page
-1. Click the Setup link on the left navigation bar
-2. Click the Users tab button
-3. Select the user you want to add the policy to
-4. Click the Policies tab button
-
-#### 2. Configure a New User Policy
-1. Click the Add Policy button
-2. Select permissions for Publish/Subscribe. The options are: NotSet, Allow, and Deny.
-3. Set the order to a number representing the order to apply the policy, lowest-to-highest.
-4. Add any number of topics to the rule. MQTT wildcards (+ and #) can be used. A catch-all topic would be `#`
-5. Click OK.
-
-## Conclusion
-
-Understanding how to manage users along with roles and policies is an essential part of securing an MQTT broker.
+See [roles](roles.md), [policies](policies.md), and [endpoints](endpoints.md).

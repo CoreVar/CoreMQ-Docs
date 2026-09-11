@@ -1,45 +1,23 @@
-# CoreMQ Overview
+# CoreMQ documentation
 
-Welcome to the CoreMQ documentation! This guide provides an introduction to CoreMQ, an advanced MQTT broker designed to power secure, scalable, and efficient IoT communications. CoreMQ is engineered to meet the demands of modern messaging systems across a variety of industries.
+CoreMQ is an MQTT broker with a browser management interface, a `coremq` command-line tool, and optional CoreControl remote management.
 
+These guides describe the current 0.1 development implementation, updated 2026-09-11. Availability depends on the broker build, edition, deployment policy and portal package version. A local development feature is not automatically available in an Azure Marketplace image or a hosted portal.
 
-## What is CoreMQ?
+## Guides
 
-CoreMQ is a feature-rich MQTT broker that supports both MQTT/MQTTS and HTTP/HTTPS via WebSocket connectivity. Its design ensures seamless integration into any environment, making it ideal for real-time data exchange in IoT applications, industrial automation, smart buildings, healthcare, logistics, and beyond.
+- [Configure and monitor the broker](configure.md)
+- [Users and certificate identities](users.md)
+- [Roles](roles.md) and [message policies](policies.md)
+- [Endpoints](endpoints.md)
+- [MQTT bridges and stream destinations](bridges.md)
+- [Browser sign-in providers](sign-in-providers.md)
+- [System events](system-events.md)
+- [Command-line management](cli.md)
+- [CoreControl and management coverage](remote-management.md)
+- [Feedback](feedback.md)
+- [MQTT 5 support and limitations](mqtt5.md)
+- [Azure deployment guide](azure/setup.md)
+- [Recent changes](CHANGELOG.md)
 
-
-## Key Features
-
-- **Flexible Protocol Support:**  
-  - **MQTT/MQTTS:** Reliable messaging with built-in TLS encryption.  
-  - **HTTP/HTTPS via WebSocket:** Ensures connectivity even in web-based environments.
-
-- **Enhanced Security:**  
-  - Integrated **SSL/TLS encryption** safeguards data during transit.  
-  - **Role-Based Access Control (RBAC):** Fine-grained control over who can access and manage the broker.  
-  - **Custom Publish/Subscribe Policies:** Tailor message routing and access to suit your specific needs.
-
-- **Scalability and Reliability:**  
-  Designed to accommodate deployments of any scale—from small projects to large, distributed systems—while maintaining performance and reliability.
-
-- **Easy Integration:**  
-  Seamlessly integrates with existing systems and cloud-native environments, reducing setup complexity and accelerating time-to-market.
-
-
-## Who Should Use CoreMQ?
-
-> CoreMQ is currently only available for Microsoft Azure
-
-CoreMQ is built for a diverse audience:
-- **Developers:** Create, test, and deploy IoT applications with a focus on secure, real-time messaging.
-- **System Integrators:** Simplify the integration of heterogeneous systems with a robust, flexible broker.
-- **IT Managers:** Enhance the security and efficiency of communication channels in enterprise and industrial settings.
-- **Industry Specialists:** Ideal for sectors like industrial automation, smart buildings, healthcare, and logistics, where reliable and secure messaging is crucial.
-
-
-## Getting Started
-
-We encourage you to begin with the Setup section to install and configure your CoreMQ broker. Once up and running, explore the RBAC and advanced configuration topics to fully leverage the power of CoreMQ for your secure communication needs.
-
-## Related Articles
-- [Setting up for Microsoft Azure](/azure/setup.md)
+The Azure deployment guide describes its existing offer workflow. Do not infer that publishing broker source or a documentation update upgrades an installed container or Marketplace deployment.
