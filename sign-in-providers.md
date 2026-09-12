@@ -1,69 +1,64 @@
 # Browser sign-in providers
 
-CoreMQ can use OpenID Connect (OIDC) for login to its own management UI while retaining local accounts. This is separate from MQTT authentication, CoreControl registration, and the portal's own login.
+CoreMQ supports OpenID Connect for its management UI. Organization identities and local accounts are separate. An organization sign-in never creates, links to, or inherits permissions from a local broker account. MQTT authentication and the Management Portal login are separate capabilities.
 
 ## Connect CoreID
 
-On deployments with guided CoreID registration enabled, open **Configure > Sign-in providers > Connect CoreID**. If you are using HTTP, **Continue securely with CoreID** opens the configured HTTPS broker address first.
+Open **Configure > Sign-in providers > Connect CoreID** using the broker's HTTPS address. Sign in to CoreID, select an organization you are authorized to administer, and approve the broker application. CoreID returns you to CoreMQ; the broker verifies the approving identity and saves the application credential on the server.
 
-1. Click **Connect CoreID**. This explicitly links your CoreID identity to the local broker account you are currently using.
-2. Sign in to CoreID, choose an existing organization where you are a tenant administrator, and approve the broker application. Complete any required MFA.
-3. CoreID redirects you back to CoreMQ after approval. If the redirect does not happen within 30 seconds, select **Return to CoreMQ**. The broker verifies an ordinary OIDC sign-in for the same issuer, subject and organization before enabling the provider.
+Registration does not grant broker access. In CoreID, assign application roles to the intended people or groups for this particular broker application. In CoreMQ, edit the provider and map those application roles to CoreMQ permissions. At least one mapped **User Manager** or **Endpoint Manager** role is required to open the management UI. Organization membership or tenant administration alone does not grant broker administration.
 
-The organization is a CoreID membership boundary. It is not the broker deployment, hosting region or cloud subscription. A CoreID account can belong to several organizations; this selection binds the broker application to one eligible organization you administer. Membership alone does not grant a broker role.
+**User Manager** manages accounts and security configuration. **Endpoint Manager** manages endpoints and operational views. Map both only when both privileges are intended. Local recovery accounts retain their separately configured permissions.
 
-Cancel on the CoreID consent screen returns to the broker configuration screen and clears the pending connection. It does not approve or activate a provider.
+The CoreID application-role editor is linked from the provider's configuration. Role assignments belong to the selected organization and application; they are not local CoreMQ user records. CoreMQ verifies current CoreID access on each authenticated request. Revocation, an inactive identity, or failure to verify access ends the external session. It never falls back to local permissions.
 
-The broker registers the application and stores its credential server-side. You do not copy client IDs, secrets or subject IDs. Successful verification activates CoreID immediately, without a restart. New guided connections use local broker roles by default. An administrator can explicitly select CoreID application roles and configure mappings afterward.
+The organization is an identity membership boundary, not a deployment, region or cloud subscription. Cancel returns to CoreMQ. Registration approval and MFA requirements are enforced by CoreID. Guided activation is immediate; subsequent manual provider changes require a broker restart.
 
-A deployment administrator enables this flow with `BrowserIdentity:CoreId:Authority` (the exact trusted HTTPS issuer, including any trailing slash) and `BrowserIdentity:CoreId:BrokerOrigin` (the broker's public HTTPS origin). CoreID must support the guided broker-registration API. These are deployment settings, not values accepted from the browser. Use a stable address for the broker handling registration; an in-progress registration is local to that process.
+## Organization identities
 
-Registration expires after ten minutes; the final sign-in verification has a five-minute window. **Cancel pending connection** clears the broker's pending attempt. It does not delete an application already approved in CoreID. If verification fails, the broker restarts, or a credential response is lost, review the application in CoreID before registering again. The broker does not retry a one-time credential redemption or silently replace an existing CoreID provider. Keep a working local recovery account.
+**Configure > Identities** lists local accounts and organization identities separately. After a successful organization sign-in, CoreMQ records its provider, display name when supplied, issuer, tenant, subject, last sign-in and observed permissions. **View permissions** opens an independent identity view. There is no associated local account and no local role editor for that identity.
 
-The guided flow is available in the current local development build. Live organization approval is performed by the user; this is not a claim of production or Marketplace qualification.
+CoreID identities show current application roles and effective CoreMQ permissions. Other providers show permissions observed at the last sign-in, explicitly labeled as observations. Display information is not an authorization grant. Identity keys use the exact issuer, configured tenant and subject, not email matching.
 
-## Accounts and permissions
+## Other OpenID Connect providers
 
-Guided CoreID setup links the approving identity to the existing broker account that started setup. It does not create a second user or grant administrator access merely because someone signs in through CoreID.
+Choose **Add provider** to configure an existing OIDC registration. Register the exact HTTPS callback `/signin-oidc/{provider-id}` and use the issuer from its discovery metadata. Configure the client ID, protected client secret if required, tenant restriction, and session duration.
 
-In **Configure > Identities**, local accounts appear under **Accounts**, and linked CoreID or other provider identities appear separately under **Organization accounts**. Each organization identity shows its provider, linked broker account, permission source and last recorded sign-in. **View account** opens the linked account and its permissions; it does not edit or delete the identity-provider account.
+Choose **Provider token roles**, specify the signed ID-token claim containing application roles (default `roles`), and map its exact values to CoreMQ permissions. The identity provider must issue that claim to this application. Providers that do not supply suitable application-role claims require an appropriate federation or claim configuration; an organization email address alone grants no access. Changes to token-based assignments apply at the next sign-in or session expiration. CoreID uses its dedicated current-access endpoint instead.
 
-The broker records an account name from validated sign-in claims (`preferred_username`, `email`, then `name`) after successful sign-in. Earlier sessions have no recorded name, so the provider subject ID is shown until the next provider sign-in. No tokens or passwords are stored with this display information. This list includes explicitly linked identities, not every account in the organization. Identity details on the account include the issuer, organization ID and subject identifier. Provider settings pending restart are identified as saved settings.
+CoreMQ supports authorization code with S256 PKCE, state/nonce, signature, issuer, audience and lifetime validation. Access and refresh tokens are not stored. Sessions are nonpersistent, do not slide, and expire no later than the signed ID token or configured 5–480-minute limit. Provider configuration changes invalidate existing external sessions after restart.
 
-Local password sign-in uses the account's CoreMQ roles and policies; local administrative permissions are under its Advanced tab. External sign-in uses the provider's configured **Permission source**. Certificate identities are certificate credentials, not browser sign-in accounts. CoreID organization roles are never automatically imported as broker roles.
+Supported integration uses OIDC; OAuth alone, AWS IAM credentials and SAML-only providers are not browser sign-in protocols for this feature. Provider-specific client registration and claim configuration must be tested in the intended tenant.
 
-### Use CoreID application roles
+## Deployment configuration
 
-1. Edit the connected provider under **Configure > Sign-in providers**.
-2. Choose **CoreID application roles** as its permission source. The CoreID deployment must have application-role support enabled.
-3. Open **Manage application roles in CoreID**. An eligible tenant administrator assigns roles to accounts or organization groups for this particular broker application; required organization MFA still applies.
-4. Back in CoreMQ, add explicit mappings from those application-role keys to existing broker roles. For example, map `broker-administrator` to **User Manager** and separately to **Endpoint Manager** when both permissions are intended.
-5. Keep exact subject-to-account assignments, save, restart the broker, and sign in again. Maintain a local recovery account.
+Guided registration requires `BrowserIdentity:CoreId:Authority` and `BrowserIdentity:CoreId:BrokerOrigin`. These are trusted deployment settings. A registration in progress belongs to its initiating broker process and browser session.
 
-CoreID-managed external sessions use only the mapped roles. They do not inherit local account roles or tenant administrator status. Unknown or unassigned roles grant no access, and a mapped management role is required to open the broker management UI. Changing this setting does not change local password sign-in permissions.
+Example CoreID provider (use your actual issuer, tenant and client):
 
-On account details, **Linked sign-in identities** shows the permission source, current CoreID application roles, mapped broker roles, and check time. CoreID assignments are read-only here; edit them in CoreID. This view is not a directory of every organization user or a sign-in audit history.
+```json
+{
+  "BrowserIdentity": {
+    "Providers": [{
+      "Id": "coreid",
+      "DisplayName": "CoreID",
+      "Enabled": true,
+      "Authority": "https://identity.example.com/",
+      "ClientId": "registered-broker-client",
+      "ClientSecretFile": "/run/secrets/coremq-coreid-client",
+      "TenantClaim": "corevar:tenant_id",
+      "TenantId": "11111111-1111-1111-1111-111111111111",
+      "Scopes": ["openid", "profile", "email", "roles"],
+      "SessionMinutes": 60,
+      "AuthorizationSource": "CoreID",
+      "RoleMappings": [
+        { "ApplicationRole": "broker-operator", "BrokerRole": "Endpoint Manager" }
+      ]
+    }]
+  }
+}
+```
 
-The broker checks current CoreID access on each authenticated external HTTP request. Revocation, expiry, disabled access, an unavailable CoreID service, or an invalid response ends external access; it does not fall back to local administrator roles. Saved configuration changes take effect after restart and invalidate sessions using the previous mapping. A request already running is not undone by later revocation.
+`Bindings` and `AuthorizationSource: Local` are no longer supported. Configure role mappings and provider-side assignments instead. The provider API does not expose stored secrets. Organization directory observations are stored independently beside the provider configuration in `organization-identities.json`; they have no local account foreign key and never determine permission grants.
 
-## Configure another provider or an existing application
-
-1. Open the broker over trusted HTTPS and select **Configure > Sign-in providers** as a User Manager.
-2. Choose **Add provider** and the provider type. The chooser supplies guidance; it does not register an application with that provider.
-3. Register an OIDC application with the identity provider. Use the exact HTTPS callback displayed by the broker, `/signin-oidc/<provider-id>`, including the broker host and port.
-4. Enter the issuer, client ID and client secret where required. Configure an exact tenant claim/value restriction when appropriate.
-5. Assign the provider's stable subject identifier to an existing local account with management access. An email address is not a substitute for the subject.
-6. Save, observe the restart-required indication, restart through your deployment process, and test sign-in. Retain a working local recovery account.
-
-The broker uses authorization code flow with PKCE and validates the issuer and subject. It does not automatically match by email or import provider roles as local administrative permissions. Settings are revision-checked. Read operations do not return the client secret; leaving the secret empty while editing retains the existing one.
-
-The chooser includes CoreID, Microsoft Entra ID, Auth0, Google Workspace, Amazon Cognito and generic OIDC. These are configuration starting points, not certification of every tenant configuration. AWS IAM keys are not browser login identities. Direct SAML support is not included.
-
-For CoreID, prefer **Connect CoreID** above. Selecting CoreID inside **Add provider** is the advanced path for an application you already registered.
-
-The local configuration API is `/api/BrowserIdentity/Configuration`. Writes require HTTPS and the broker's origin. Dedicated CLI commands, CoreControl management and reusable portal configuration surfaces are still missing. See [management coverage](remote-management.md).
-
-
-## Verification
-
-The current development integration was verified end to end against CoreID DEV and the local Docker broker with isolated synthetic accounts. Unassigned sign-in was denied. Direct and group assignments granted endpoint access while user administration remained forbidden. Removing either assignment denied the next request from the already-open broker session. The read-only account view showed the current CoreID role and mapped broker permission, with no local roles assigned. This is development acceptance, not qualification of every identity provider or production deployment.
+The local broker UI provides provider configuration. CoreControl/portal configuration parity must be verified separately; this document does not claim that provider changes are remotely editable through every management surface.
