@@ -26,15 +26,19 @@ JSON configuration commands accept one of `--file <path>`, `--file -` for stdin,
 
 Command areas include endpoints, users, roles, policies, connections, subscriptions, bridges/uplinks, security authorities and identities, uploaded files, schema policies, status and diagnostics. Revisioned updates carry `expectedRevision`; removals require `--expected-revision`. Read again after a conflict rather than silently substituting a newer revision.
 
-The CoreVar-hosted CoreMQ module also provides CoreControl commands such as `control bridges-list`, `control bridges-validate`, `control bridges-put` and `control bridges-delete`. They use the remote command queue and require the target deployment's advertised capability and authorization. A failed remote command does not fall back to direct broker access.
+CoreControl transports authorized management commands to the selected deployment. Bridges are a separate CoreMQ capability. Older module versions expose bridge operations under legacy names such as `control bridges-list`; those names describe remote routing, not a CoreControl bridge. Use the installed module's help to check its command names. A failed remote command does not fall back to direct broker access.
 
-Coverage is not yet universal: browser sign-in provider configuration and system-event settings do not have dedicated CLI commands. See [management coverage](remote-management.md). Installation/distribution of a CLI module is separate from updating these documentation files.
+Current candidate commands include browser sign-in providers, organizational identities and system-event settings. End-to-end portal coverage is still being qualified. See [management coverage](remote-management.md). Installation/distribution of a CLI module is separate from updating these documentation files.
 
 > The commands below are included in the current release candidate; Marketplace publication is still pending qualification.
 
 ## Organization sign-in and identities
 
 `coremq sign-in providers list` reads saved configuration and its revision; `coremq sign-in providers status` reads runtime provider status. Save a reviewed provider definition with `coremq sign-in providers put --file provider.json`. Use `--schema` on the save command for the JSON contract. Saving requires HTTPS and the current configuration revision. Manually saved changes require a broker restart; the guided CoreID flow is separate.
+
+Remove a manually configured provider with `coremq sign-in providers remove <id> --revision <revision>` using its current saved revision. Saving or removing a provider requires a restart before that change becomes active.
+
+On a CoreControl route, provider list/put/remove and organizational identity list/access use the product's dedicated capabilities. Remote writes require a stable `--operation-id` and the numeric `expectedRevision` returned by the remote snapshot; direct broker provider configuration uses its string revision. Do not interchange the two revision formats. A client secret supplied through a protected input file or stdin is sealed for the specific provider before the command is sent. Permission checks remain enforced by both CoreControl and the broker.
 
 `coremq organization identities list` lists observed organizational identities. `coremq organization identities access <providerId> <identityId>` reads current CoreID application roles and effective broker permissions for an observed identity. Organizational identities remain independent of local broker accounts.
 
