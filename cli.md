@@ -29,3 +29,23 @@ Command areas include endpoints, users, roles, policies, connections, subscripti
 The CoreVar-hosted CoreMQ module also provides CoreControl commands such as `control bridges-list`, `control bridges-validate`, `control bridges-put` and `control bridges-delete`. They use the remote command queue and require the target deployment's advertised capability and authorization. A failed remote command does not fall back to direct broker access.
 
 Coverage is not yet universal: browser sign-in provider configuration and system-event settings do not have dedicated CLI commands. See [management coverage](remote-management.md). Installation/distribution of a CLI module is separate from updating these documentation files.
+
+> The commands below are included in the current release candidate; Marketplace publication is still pending qualification.
+
+## Organization sign-in and identities
+
+`coremq sign-in providers list` reads saved configuration and its revision; `coremq sign-in providers status` reads runtime provider status. Save a reviewed provider definition with `coremq sign-in providers put --file provider.json`. Use `--schema` on the save command for the JSON contract. Saving requires HTTPS and the current configuration revision. Manually saved changes require a broker restart; the guided CoreID flow is separate.
+
+`coremq organization identities list` lists observed organizational identities. `coremq organization identities access <providerId> <identityId>` reads current CoreID application roles and effective broker permissions for an observed identity. Organizational identities remain independent of local broker accounts.
+
+## Feedback and device revocation
+
+`coremq feedback context` reads the feedback notice, available environment information and context version. `coremq feedback send --file feedback.json` submits the explicitly selected feedback and consent. The CLI obtains the antiforgery token automatically, without adding consent or environment details. `coremq feedback consent revoke --file revoke.json` revokes previously recorded consent at its expected revision.
+
+`coremq security identities revoke <identityId> --file request.json` and `coremq security identities revocation <identityId> <operationId> --tenant-id <tenant> --deployment-id <deployment>` use a scoped workload service token. A normal administrator login token does not authorize device revocation. These commands preserve the service's tenant, deployment, operation ID and revision requirements.
+
+## System event configuration
+
+`coremq system-events show` reads the event publishing setting and revision. `coremq system-events put --file settings.json` saves `{ "enabled": true, "expectedRevision": 7 }` using the revision returned by the read command; the initial unsaved setting has a null revision. A stale revision is rejected.
+
+The same command names work through the CoreVar CLI module on a selected CoreControl route. Remote writes additionally require a stable `--operation-id`. The broker's configuration read/write policies apply. Settings persist and peer instances refresh shared configuration every two seconds.
