@@ -16,7 +16,7 @@ The organization is an identity membership boundary, not a deployment, region or
 
 ## Organization identities
 
-**Configure > Identities** lists local accounts and organization identities separately. After a successful organization sign-in, CoreMQ records its provider, display name when supplied, issuer, tenant, subject, last sign-in and observed permissions. **View permissions** opens an independent identity view. There is no associated local account and no local role editor for that identity.
+**Configure > Identities** shows local accounts, organization identities, and certificate identities in one searchable list with an Account type column. Click a column heading to sort all types together by name, type, provider, status, or last sign-in. Local accounts and certificate identities offer Edit and Delete; organization identities offer View permissions, with assignments managed by their provider. Certificate authorities remain in their own trust configuration tab. After a successful organization sign-in, CoreMQ records its provider, display name when supplied, issuer, tenant, subject, last sign-in and observed permissions. **View permissions** opens an independent identity view. There is no associated local account and no local role editor for that identity.
 
 CoreID identities show current application roles and effective CoreMQ permissions. Other providers show permissions observed at the last sign-in, explicitly labeled as observations. Display information is not an authorization grant. Identity keys use the exact issuer, configured tenant and subject, not email matching.
 
