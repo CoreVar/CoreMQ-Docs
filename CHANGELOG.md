@@ -1,5 +1,11 @@
 # Documentation changes
 
+## 2026-09-12 — identity directory
+
+- Clarified the combined identity list, account types, provider labels and type-specific actions.
+- Documented independent organization identities and last-observed versus current access.
+- Recorded development Management Portal read coverage and remaining qualification work.
+
 ## 2026-09-11 — 0.1 development documentation
 
 - Documented Configure navigation, dashboard activity and unified identity management.
