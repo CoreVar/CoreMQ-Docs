@@ -26,7 +26,9 @@ The guided flow is available in the current local development build. Live organi
 
 Guided CoreID setup links the approving identity to the existing broker account that started setup. It does not create a second user or grant administrator access merely because someone signs in through CoreID.
 
-In **Configure > Identities > Accounts**, the **Sign-in providers** column shows configured provider links. Open the broker account to see its assigned broker roles and **Linked sign-in identities**. Identity details include the issuer, organization ID and subject identifier. Provider settings pending restart are identified as saved settings.
+In **Configure > Identities**, local accounts appear under **Accounts**, and linked CoreID or other provider identities appear separately under **Organization accounts**. Each organization identity shows its provider, linked broker account, permission source and last recorded sign-in. **View account** opens the linked account and its permissions; it does not edit or delete the identity-provider account.
+
+The broker records an account name from validated sign-in claims (`preferred_username`, `email`, then `name`) after successful sign-in. Earlier sessions have no recorded name, so the provider subject ID is shown until the next provider sign-in. No tokens or passwords are stored with this display information. This list includes explicitly linked identities, not every account in the organization. Identity details on the account include the issuer, organization ID and subject identifier. Provider settings pending restart are identified as saved settings.
 
 Local password sign-in uses the account's CoreMQ roles and policies; local administrative permissions are under its Advanced tab. External sign-in uses the provider's configured **Permission source**. Certificate identities are certificate credentials, not browser sign-in accounts. CoreID organization roles are never automatically imported as broker roles.
 
