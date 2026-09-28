@@ -1,133 +1,54 @@
-# Deploying CoreMQ to Microsoft Azure
+# Deploy CoreMQ on Azure Kubernetes Service
 
-This guide walks you through the deployment and configuration of CoreMQ using the Azure Marketplace Express setup. By following these steps, you'll deploy a fully configured, secure MQTT broker tailored for IoT communications—all through the intuitive Azure Portal interface.
+The [public CoreMQ Azure Marketplace offer](https://marketplace.microsoft.com/en-us/product/container/core-var.coremq-kubernetes?tab=Overview) installs a Kubernetes application into **your existing AKS cluster**. It is not the retired Express virtual-machine offer. You operate the cluster, data services, networking, DNS, and certificates. The Marketplace software charge is currently USD $0.19 per running broker pod-hour; the default two replicas are $0.38/hour before Azure infrastructure and data-service charges. Check the plan price shown in Marketplace before creating the deployment.
 
+## Before you deploy
 
-## 1. Accessing the Azure Marketplace
+- Have an AKS cluster with capacity for at least two Linux AMD64 broker pods. Select the **resource group containing that cluster** on the Azure deployment form. CoreMQ does not create the cluster.
+- Provide a PostgreSQL database and a Redis service reachable from broker pods. The published 0.1.6 Marketplace form asks for their connection strings; it does not create either service. Store and handle those strings as secrets.
+- Choose the MQTT DNS hostname you will use. Arrange DNS and a network path to the broker separately. The package's default Kubernetes Service is `ClusterIP`, so installing it does not expose a public MQTT address.
+- For an encrypted first connection, have a PFX certificate valid for that hostname. The form accepts a base64-encoded PFX when **Enable MQTTS on port 8883** is selected. Deployment does not issue a certificate or create DNS records.
 
-1. **Navigate to CoreMQ Marketplace Listing:**  
-   Open your web browser and navigate to the [Azure Portal - CoreMQ](https://portal.azure.com/#create/core-var.coremq-entrycoremq-express). Sign in with your Azure credentials.
+## Install from Marketplace
 
-2. **Select offering:**  
-   Select the "Express" plan and click "Create".
+1. Open [CoreMQ's live Azure deployment page](https://portal.azure.com/#create/core-var.coremq-kubernetescoremq-hourly), select the public hourly plan, and sign in to the Azure subscription that contains your AKS cluster.
+2. On **Basics**, select the cluster's resource group and region. In **CoreMQ configuration**, enter the **Existing AKS cluster name** exactly as it appears in Azure. The published 0.1.6 form uses a name field; a newer form may offer a cluster selector.
+3. Select the broker replica count (two by default), enter the MQTT hostname, and create an initial administrator username and a unique password of at least 12 characters. Keep these credentials private.
+4. Enter the reachable PostgreSQL and Redis connection strings. To enable MQTTS at installation, select **Enable MQTTS on port 8883** and provide the base64-encoded PFX in the protected certificate field. The certificate must cover the MQTT hostname. Do not put a certificate, password, or connection string in a resource name, tag, command history, or support ticket.
+5. Review the Marketplace plan, Azure resources, and terms displayed by Azure, then create the deployment. Wait for the ARM deployment and CoreMQ cluster extension to report **Succeeded**.
 
+The published package installs into the `coremq` namespace. From a workstation authorized for the cluster, verify that the broker pods are Ready and inspect the Service ports:
 
-## 2. Basics
+```sh
+az aks get-credentials --resource-group <cluster-resource-group> --name <cluster-name>
+kubectl -n coremq get deployments,pods,services
+kubectl -n coremq rollout status deployment/<coremq-deployment>
+```
 
-### Project Details
+Choose the deployment and Service names from the `kubectl` output. The default Service is internal to the cluster. Expose only the required MQTTS port through a network design you control, such as a private TCP load balancer, and point your MQTT hostname to that endpoint. Preserve TLS through to CoreMQ and verify the certificate hostname. Do not expose the plaintext MQTT port 1883 or the management port 8080 to the public Internet as a shortcut.
 
-- **Subscription**
-  Select the subscription you want to deploy to.
-- **Resource Group**
-  Select the resource group you want to deploy to or create a new one.
+## Send a first encrypted message
 
-### Instance Details
+1. Reach the browser management interface through an authorized private route. For a local administration session, you can forward the internal management Service to loopback with `kubectl -n coremq port-forward service/<coremq-service> 8080:8080` and open `http://127.0.0.1:8080`. Log in with the initial administrator account. The port-forward is for local administration; it is not a public HTTPS endpoint.
+2. Under **Configure > Identities**, create a separate test client account. Configure its publish and subscribe message policies for a narrow test topic, such as `demo/first`. Administrator login and MQTT client permissions are separate. Review [users](../users.md), [policies](../policies.md), and [endpoints](../endpoints.md).
+3. Confirm that the MQTTS listener is enabled, your TCP endpoint is reachable on port 8883, DNS resolves to it, and the certificate validates for the hostname. Use an MQTT client that verifies TLS; never use its insecure-certificate option to make this check pass.
+4. With Eclipse Mosquitto clients **2.1 or later**, place the test username, password, hostname, port, and certificate authority settings in a local file accessible only to you. For example, `client.conf` can contain the following options, one per line. Replace every placeholder with your deployment's values and protect or delete the file after the test:
 
-Upon selecting the Express version, you’ll be presented with the initial configuration page. This section covers the basic broker setup:
+   ```text
+   -h broker.example.com
+   -p 8883
+   -u test-client
+   -P <test-client-password>
+   --cafile /path/to/trusted-ca.pem
+   ```
 
-- **Region**
-  Select the region you want to deploy to.
-- **Broker Account Name:**  
-  This name uniquely identifies your CoreMQ instance within Azure. Use only letters, numbers, and dashes; must be between 3 and 24 characters.  
+5. In one terminal, subscribe, then publish from another terminal. Both commands read credentials from the protected config file rather than putting the password on the command line:
 
-- **Registration Information:**  
-  - **Registration Link:**  
-    An InfoBox provides a link to register your hostname with CoreVar. Click the link to obtain your registration code. This will open a new browser tab to the CoreMQ registration page. You will need to login, and can do so with your Microsoft Entra ID.
-  - **Register a Hostname**
-    On the registration page, enter a hostname. This will be the domain your broker will be available at. Once you've entered an available hostname, click "Create Setup Token". This will generate the registration code for your broker. **Do not share this code with anyone.**
-  - **Broker Registration Code:**  
-    Once you’ve registered, copy and paste your registration code into the designated text box.
+   ```sh
+   mosquitto_sub -o client.conf -t demo/first -q 1 -C 1 -W 30
+   mosquitto_pub -o client.conf -t demo/first -q 1 -m 'hello from CoreMQ'
+   ```
 
-### Managed Application Details
+The subscriber should print `hello from CoreMQ`. If it does not, check pod readiness, the Service and network path, DNS, the certificate chain and hostname, client authentication, and the topic policies. A healthy Kubernetes deployment alone does not prove client access.
 
-- **Application Name**
-  This is the name of your application as it will show up in your list of resources. Pick something unique.
-
-- **Managed Resource Group**
-  This is the name of the managed resource group where all of the resources that operate CoreMQ are deployed to. This name is automatically generated, but it can be overridden if necessary.
-
-
-## 3. Virtual Machine
-
-CoreMQ is deployed on a virtual machine optimized for performance and security. In this step, you’ll configure the underlying VM:
-
-- **Customize Your VM:**  
-  - **VM Size:**  
-    Choose a VM size from the Size Selector. The VM must support premium storage. The more powerful VM you select, the more throughput CoreMQ will handle.
-
-
-## 4. MQTT and Endpoint Configuration
-
-The next section allows you to configure CoreMQ’s MQTT-specific settings and endpoints:
-
-### Admin User Setup
-- **Admin Username:**  
-  This user will have access to the management portal for further broker configuration. Must be 3 to 32 characters long using only letters and numbers.
-  
-- **Admin Password:**  
-    You’ll be required to confirm the password to ensure accuracy. Password must be at least 12 characters long.  
-
-### Endpoint Settings
-Configure how your broker accepts connections:
-
-- **Protocol Enablement:**  
-  - **MQTT:**  
-    Enable if you require unencrypted MQTT traffic (not recommended for production). The default port number for MQTT traffic is 1883.
-  - **MQTTS:**  
-    Enabled by default to secure MQTT connections with TLS encryption. The default port number for MQTTS traffic is 8883.
-  - **HTTP (WebSockets):**  
-    Can be enabled for web-based connections. A warning advises that HTTP traffic is not encrypted. The default port number for HTTP traffic is 80.
-  - **HTTPS (WebSockets):**  
-    Enabled by default for secure, encrypted HTTP connections. The default port number for HTTPS traffic is 443.
-
-- **Websocket Path:**  
-  This is the path that MQTT over Websockets will be available at. Must start with a forward slash and contain only lowercase letters and numbers.
-
-- **Authentication Type:**
-  Basic authentication is more secure and is recommended over anonymous.
-
-
-## 5. Resource Tagging
-
-In the final configuration step, you can assign tags to your deployed resources. Tags help you organize and manage resources such as storage accounts, virtual machines, network interfaces, and more within your Azure environment.
-
-
-## 6. Review + create
-
-This page contains pricing & terms, contact information, Co-Admin Access Permission, and a summary of the deployment configuration:
-- **Basics:**
-  - Subscription
-  - Resource group
-  - Region
-  - Broker Account Name
-  - Registration Code
-  - Application Name
-  - Managed Resource Group Name
-- **Virtual Machine:**
-  - Size
-- **MQTT:**
-  - Username
-  - Admin Password (redacted)
-  - MQTT Port (if selected)
-  - MQTTS Port (if selected)
-  - HTTP Port (if selected)
-  - HTTPS Port (if selected)
-- **Resource Tags:** Any resource tags you configured.
-
-After reviewing your configuration and agreeing to the terms, click **Create**. Azure will then provision the necessary resources, install CoreMQ on the virtual machine, and apply your customized settings.
-
-Once deployed, your application will be availabe at the hostname you configured in the CoreMQ hostname registration step. You can login to it with the admin username and password you configured.
-
-
-## Final Notes
-
-- **Security Considerations:**  
-  Always use encrypted protocols (MQTTS and HTTPS) for production environments.  
-- **Customization:**  
-  While the default settings are optimized for most scenarios, you can adjust VM sizes to meet specific requirements.
-- **Next Steps:**  
-  Once deployed, use the [Azure management portal](https://portal.azure.com) to manage the deployed resources, and use the [CoreVar Portal](https://portal.corevar.com) to manage the hostname registration.
-
-This guide provides the essential steps to get CoreMQ running on Azure with minimal hassle. For more detailed instructions on advanced configurations and troubleshooting, refer to the additional documentation sections on our website.
-
-Happy deploying!
+The [CoreMQ configuration guides](../README.md) cover later endpoint, identity, and policy changes. Features in those development guides may require a newer broker build than the currently installed Marketplace package.

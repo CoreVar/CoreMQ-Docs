@@ -20,4 +20,4 @@ These guides describe the current 0.1 development implementation, updated 2026-0
 - [Azure deployment guide](azure/setup.md)
 - [Recent changes](CHANGELOG.md)
 
-The Azure deployment guide describes its existing offer workflow. Do not infer that publishing broker source or a documentation update upgrades an installed container or Marketplace deployment.
+The [Azure deployment guide](azure/setup.md) covers the public AKS Marketplace offer and an encrypted first-message check. Publishing broker source or documentation does not upgrade an installed container or Marketplace deployment.
