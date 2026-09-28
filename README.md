@@ -2,7 +2,7 @@
 
 CoreMQ is an MQTT broker with a browser management interface, a `coremq` command-line tool, and optional CoreControl remote management.
 
-These guides describe the current 0.1 development implementation, updated 2026-09-11. Availability depends on the broker build, edition, deployment policy and portal package version. A local development feature is not automatically available in an Azure Marketplace image or a hosted portal.
+These guides describe the 0.1 development implementation. Availability depends on the broker build, edition, deployment policy and portal package version. A local development feature is not automatically available in an Azure Marketplace image or a hosted portal.
 
 ## Guides
 
