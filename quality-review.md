@@ -52,7 +52,7 @@ These scores assess the revised guides and scoped local rendering/behavior check
 
 ## Residual product gaps
 
-- Candidate 2133 role/user policy Edit links target an unregistered route and lack scoped single-policy GET/PUT APIs. Existing-policy editing is held pending exact corrected-candidate evidence; create/delete/read checks are not edit qualification.
+- Candidate 2133 role-policy Edit was verified Not found; the user-policy route and direct single-policy GET/PUT are also absent in source. Native CLI list/add/remove and source-level remote scoped put are distinct surfaces. Existing-policy editing is held pending exact corrected-candidate evidence; create/delete/read checks are not edit qualification.
 
 - An apparent local editor/API mismatch was traced to concurrent broker cookies sharing localhost across ports; isolated session recheck passed. No product defect is inferred from that initial failure.
 - CoreControl live lifecycle/rotation, cross-portal authorized writes, protected upload and multi-replica activation remain separately qualified.
