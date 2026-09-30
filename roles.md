@@ -32,6 +32,8 @@ coremq users roles list <user-id>
 { "add": ["Telemetry client"], "remove": [] }
 ```
 
+Candidate 2133's browser **Edit** action on an existing role policy is held because its target route is unregistered. Role creation/assignment and policy creation/listing are separate checks. See the [policy-edit qualification boundary](policies.md#ui-and-cli) before changing an existing policy.
+
 An allow from one role wins over a deny from another. Test combined roles before granting them. Removing administrative roles preserves other roles; verify effective access after the change.
 
 ## Organization application roles

@@ -50,6 +50,8 @@ coremq users policies list <user-id>
 { "type": "message", "publish": "Allow", "subscribe": "NotSet", "order": 10, "topics": ["devices/17/telemetry"] }
 ```
 
-Use matching CLI `--schema` for create/update differences. Read back after writing and test real authorization. Keep a tested local recovery login before changing administrative/provider mappings.
+**Browser policy editing is held for candidate 2133.** Its role/user policy **Edit** links navigate to an unregistered route, and scoped single-policy GET/PUT APIs are absent in that candidate. The create/list/membership and MQTT checks in this review do not qualify editing an existing policy. Do not assume a correction is deployed from a source fix or passing create/delete check; require the corrected immutable candidate and authorized edit/read-back plus persistence evidence.
+
+Use the installed CLI `--schema` for the documented operations; this guide does not promise a single-policy update command. Read back after writing and test real authorization. Keep a tested local recovery login before changing administrative/provider mappings.
 
 Next: [Roles](roles.md), [system permissions](system-events.md), [troubleshooting](operations.md).

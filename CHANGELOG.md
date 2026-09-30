@@ -1,5 +1,9 @@
 # Documentation changes
 
+## 2026-09-30 — policy-edit qualification update
+
+- Marked candidate 2133 existing role/user policy editing held after qualification found an unregistered browser route and missing scoped single-policy GET/PUT APIs. Preserved create/list/membership and MQTT evidence without treating them as an edit pass.
+
 ## 2026-09-30 — task guides and scoped validation
 
 - Added local/containers and provider deployment guidance, backup/restore, operations, schemas, measured sizing, upgrade/rollback and uninstall.
