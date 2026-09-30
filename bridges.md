@@ -8,7 +8,7 @@ Open **Bridges**, choose **Create bridge**, and enter a name and destination. MQ
 
 Configure TLS, authentication and uploaded trust material as required by the remote broker. Add explicit topic routes for **Local to remote** or **Remote to local**. Configure separate routes for each direction. JSON direction values remain `LocalToUpstream` and `UpstreamToLocal` for compatibility.
 
-![Create bridge editor with connection purpose, host, TLS, topic routes and start-on-save controls](assets/bridge-editor.jpg)
+![Create bridge editor with connection purpose, host, TLS, topic routes and start-on-save controls](assets/bridge-editor.jpg){width=800 style="max-width:100%;height:auto"}
 
 This synthetic September 30 local capture shows the actual editor. **Connection purpose** offers Upstream service, Peer broker, External MQTT broker, Apache Kafka, Azure Event Hubs and CoreStream. MQTT hosts take a hostname/IP without a URL scheme or port; changing TLS does not change the port. Leave **Start this bridge when saved** off while reviewing an unverified destination. **Check settings** validates configuration, not connectivity. Add routes before expecting messages to move.
 

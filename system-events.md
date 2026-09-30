@@ -88,7 +88,7 @@ monitoring traffic. Authentication failures, certificate expiry, policy changes,
 CoreControl enrollment changes, and audit events are not yet connected to this
 stream. They must not be inferred from the lifecycle events above.
 
-![System events editor with persistent emission enabled and Save/Reload controls](assets/configure-system-events.jpg)
+![System events editor with persistent emission enabled and Save/Reload controls](assets/configure-system-events.jpg){width=800 style="max-width:100%;height:auto"}
 
 Synthetic local screenshot after CLI update and UI reload on September 30. The HTTP fixture does not qualify cloud or portal writes.
 

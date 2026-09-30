@@ -35,6 +35,6 @@ coremq endpoints certificate refresh <id>
 
 Track expiry and renew early enough to test and roll back. Stage new material through the approved upload/mount channel, refresh/restart as that release requires, then verify every replica's listener with a new TLS connection. Existing sessions alone cannot prove the renewed certificate is served. Retain the old valid material for the agreed rollback window under protected access. `refresh` reloads available material; it is not proof that a CA issued a new certificate.
 
-![Endpoint list showing listener hostname, ports, authentication, and Edit/Delete controls in the current CoreMQ UI.](assets/configure-endpoints.jpg)
+![Endpoint list showing listener hostname, ports, authentication, and Edit/Delete controls in the current CoreMQ UI.](assets/configure-endpoints.jpg){width=800 style="max-width:100%;height:auto"}
 
 Captured in a disposable local build on September 30, 2026; its plaintext loopback evaluation listener is not a production configuration. See [backup](backup-restore.md), [upgrade](upgrade-uninstall.md), and [release limits](release-status.md).

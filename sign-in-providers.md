@@ -65,7 +65,7 @@ The local broker UI provides provider configuration. CoreControl/portal configur
 
 ## Provider setup checklist
 
-![Add provider editor showing OIDC presets, callback, role source and role mappings](assets/provider-editor.jpg)
+![Add provider editor showing OIDC presets, callback, role source and role mappings](assets/provider-editor.jpg){width=800 style="max-width:100%;height:auto"}
 
 The September 30 local editor capture uses synthetic data and empty credentials. The HTTP evaluation fixture deliberately cannot save providers: production provider changes require the broker's HTTPS origin.
 

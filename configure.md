@@ -21,7 +21,7 @@ Use **Bridges** to list existing connections to other brokers or stream destinat
 
 Updates may require reconnecting clients or restarting the broker; observe the confirmation and pending-state information for that operation. The browser and management portals can differ when their package versions differ. See [management coverage](remote-management.md).
 
-![CoreMQ Configure with Identities selected, search and account-type columns, alongside roles, authorities, schemas, endpoints, system events and providers.](assets/configure-identities.jpg)
+![CoreMQ Configure with Identities selected, search and account-type columns, alongside roles, authorities, schemas, endpoints, system events and providers.](assets/configure-identities.jpg){width=800 style="max-width:100%;height:auto"}
 
 Captured from reviewed source on September 30, 2026 in a disposable local broker with synthetic data. This proves navigation and identity read UI, not cloud/remote mutations. Labeled text steps remain authoritative; edition/permissions may change the screen.
 
