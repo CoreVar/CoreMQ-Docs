@@ -15,7 +15,7 @@ This documentation review is dated **September 30, 2026**. Its implementation ba
 | Stream bridges | Outbound Kafka-compatible producer profiles and disposable Kafka acceptance | Real CoreStream/Event Hubs, reverse consumption and cluster failover not qualified |
 | Persistence providers | Local SQLite; cloud relational/document implementations | PostgreSQL/Redis evidence does not qualify arbitrary SQL, SQL Server or every document provider |
 | HA/capacity / ordered runtime | Exploratory tests and ongoing recovery work | No linear scaling or production ceiling; ordered-runtime candidate held |
-| Certificates | Upload/reload and deployment-mounted channels | No automatic certificate issuance promise; permitted channel depends on deployment policy |
+| Certificates | Upload/reload and deployment-mounted channels; 2177 disabled synthetic CA public PEM upload, explicit replacement and delete/API absence passed | 2177 metadata-only CA editing without PEM failed with unchanged revision; held pending qualified fix. Active trust/authentication, restart and remote mutations not inferred; no automatic certificate issuance promise |
 | GCP | Provider-specific packaging and runtime metadata | Provider/commercial approval and real customer acceptance pending |
 
 Historical reports retain their original outcomes. A strict recovery report with 48 passes and 2 NOT_RUN remains incomplete even if a separate full-transport fixture passed 50/50. A build, package scan, capability manifest or visible portal control cannot substitute for an authorized end-to-end action with read-back.

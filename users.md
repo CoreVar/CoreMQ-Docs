@@ -26,6 +26,8 @@ See [roles](roles.md), [policies](policies.md), and [endpoints](endpoints.md).
 
 ## Certificate authority and identity checks
 
+**Candidate 2177 known issue:** local browser metadata-only CA editing without a new PEM failed and left revision 1 unchanged. Public PEM upload/create and an explicit public PEM replacement with a name edit passed against a disabled synthetic authority; deletion and API 404 absence were confirmed. Keep metadata-only editing held until the fix is present in a qualified artifact. These checks do not qualify active listener trust, certificate authentication, restart persistence or remote authority changes.
+
 Upload public CA certificates under **Certificate authorities**, then configure the listener's intended trust/authentication settings. A trusted chain alone does not assign a device role. Create the certificate identity/backing account, map the supported certificate identity field and client-ID rules, and assign only its message role. Test an authorized certificate, an untrusted certificate, a revoked/disabled identity and an unrelated client ID.
 
 ```text

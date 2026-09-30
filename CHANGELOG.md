@@ -1,5 +1,9 @@
 # Documentation changes
 
+## 2026-09-30 — candidate 2177 certificate-authority limitation
+
+- Recorded the failed metadata-only CA edit separately from successful disabled-authority public PEM upload/replacement and cleanup; retained active trust, restart and remote qualification limits.
+
 ## 2026-09-30 — candidate 2177 scoped policy qualification
 
 - Added corrected local role/user policy modal workflows and native get/update command examples after exact 2177 browser/API/native checks passed. Bound evidence to immutable source/image/CLI artifacts, retained the 2133 failure and remote/restart/full-release holds.
