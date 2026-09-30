@@ -33,7 +33,7 @@ CoreMQ is an MQTT broker with a browser management interface, a `coremq` CLI, an
 
 ## How the parts fit
 
-![MQTT clients use broker listeners; database and Redis support cloud state, bridges forward selected messages, and CoreControl carries outbound authorized management.](assets/coremq-architecture.svg)
+![MQTT clients use broker listeners; database and Redis support cloud state, bridges forward selected messages, and CoreControl carries outbound authorized management.](assets/coremq-architecture.png)
 
 The CLI uses the HTTP(S) management origin. Redis is the cloud backplane; bridges route selected messages to other systems. CoreControl carries authorized remote commands, not application payloads. These paths have different credentials and permissions.
 

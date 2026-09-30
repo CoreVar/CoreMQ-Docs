@@ -33,7 +33,7 @@ These scores assess the revised guides and scoped local rendering/behavior check
 | Task/use-case coverage | 4 | 8 | Local/container plus Azure/AWS/GCP/private prerequisites and operate/retire path; non-Azure commercial acceptance still held |
 | CLI guidance/examples | 6 | 8 | Command inventory, schemas, native/module distinction, revision and exit behavior; 49 scoped executable checks |
 | UI guidance | 6 | 8 | Actual labels, seven synthetic captures, provider/bridge steps, System events save/read-back; external tenants/remote writes unqualified |
-| Screenshots/diagrams | 1 | 8 | Seven current screens with provenance/alt text and architecture SVG with accessible description |
+| Screenshots/diagrams | 1 | 8 | Seven current screens with provenance/alt text and architecture PNG with alternate text and retained described SVG source |
 | Troubleshooting | 3 | 8 | Symptom/check/verification table, cookie isolation, diagnostics and support handoff |
 | Accessibility | 5 | 8 | One H1 per page, labeled code/alt text, high-contrast responsive preview reviewed at desktop/390px; no full assistive-technology audit |
 | Production operations | 2 | 8 | Backup consistency, recovery drill, monitored rollout/abort, retention and sizing/cost criteria; no promised RPO/RTO or capacity certification |
