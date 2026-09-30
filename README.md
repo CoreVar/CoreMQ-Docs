@@ -20,4 +20,4 @@ These guides describe the 0.1 development implementation. Availability depends o
 - [Azure deployment guide](azure/setup.md)
 - [Recent changes](CHANGELOG.md)
 
-The [Azure deployment guide](azure/setup.md) covers the public AKS Marketplace offer and an encrypted first-message check. Publishing broker source or documentation does not upgrade an installed container or Marketplace deployment.
+The [Azure deployment guide](azure/setup.md) covers the public AKS Marketplace offer, its current network exposure warning, and a conditional encrypted first-message check. Read the warning before installing. Publishing broker source or documentation does not upgrade an installed container or Marketplace deployment.

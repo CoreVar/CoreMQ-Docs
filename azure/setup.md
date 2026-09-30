@@ -2,14 +2,18 @@
 
 The [public CoreMQ Azure Marketplace offer](https://marketplace.microsoft.com/en-us/product/container/core-var.coremq-kubernetes?tab=Overview) installs a Kubernetes application into **your existing AKS cluster**. It is not the retired Express virtual-machine offer. You operate the cluster, data services, networking, DNS, and certificates. The Marketplace software charge is currently USD $0.19 per running broker pod-hour; the default two replicas are $0.38/hour before Azure infrastructure and data-service charges. Check the plan price shown in Marketplace before creating the deployment.
 
+> **Check network exposure before installing.** The CoreMQ 0.1.6 Marketplace package in CoreVar's release registry defaults to a Kubernetes `LoadBalancer` Service with the management interface on HTTP port 8080 and plaintext MQTT on port 1883. MQTTS on port 8883 is disabled by default. Selecting **Enable MQTTS** adds TLS access but does not remove the other two ports or make the load balancer private. Do not install this package into a cluster where that Service could receive an Internet-reachable address until the package is corrected or you have verified controls that prevent public exposure from the moment it is created. An AKS deployment has not been used to verify the live Service address for this guide.
+
 ## Before you deploy
 
 - Have an AKS cluster with capacity for at least two Linux AMD64 broker pods. Select the **resource group containing that cluster** on the Azure deployment form. CoreMQ does not create the cluster.
 - Provide a PostgreSQL database and a Redis service reachable from broker pods. The published 0.1.6 Marketplace form asks for their connection strings; it does not create either service. Store and handle those strings as secrets.
-- Choose the MQTT DNS hostname you will use. Arrange DNS and a network path to the broker separately. The package's default Kubernetes Service is `ClusterIP`, so installing it does not expose a public MQTT address.
+- Choose the MQTT DNS hostname you will use. Arrange DNS and a controlled network path to the broker separately. The package's default `LoadBalancer` Service may allocate a public IP address and incur Azure load-balancer and public-IP charges; verify your cluster's behavior and isolation controls before installation.
 - For an encrypted first connection, have a PFX certificate valid for that hostname. The form accepts a base64-encoded PFX when **Enable MQTTS on port 8883** is selected. Deployment does not issue a certificate or create DNS records.
 
-## Install from Marketplace
+## Install from Marketplace after network exposure is controlled
+
+These steps apply only after your cluster operator has verified that the package's management and plaintext MQTT ports cannot become publicly reachable during installation. A later firewall or Service change does not prevent exposure during initial creation. If you cannot establish this condition, wait for a corrected Marketplace package.
 
 1. Open [CoreMQ's live Azure deployment page](https://portal.azure.com/#create/core-var.coremq-kubernetescoremq-hourly), select the public hourly plan, and sign in to the Azure subscription that contains your AKS cluster.
 2. On **Basics**, select the cluster's resource group and region. In **CoreMQ configuration**, enter the **Existing AKS cluster name** exactly as it appears in Azure. The published 0.1.6 form uses a name field; a newer form may offer a cluster selector.
@@ -25,11 +29,11 @@ kubectl -n coremq get deployments,pods,services
 kubectl -n coremq rollout status deployment/<coremq-deployment>
 ```
 
-Choose the deployment and Service names from the `kubectl` output. The default Service is internal to the cluster. Expose only the required MQTTS port through a network design you control, such as a private TCP load balancer, and point your MQTT hostname to that endpoint. Preserve TLS through to CoreMQ and verify the certificate hostname. Do not expose the plaintext MQTT port 1883 or the management port 8080 to the public Internet as a shortcut.
+Choose the deployment and Service names from the `kubectl` output. Inspect the Service type, external address, ports, and your network rules; confirm that ports 8080 and 1883 are not publicly reachable. Enable and expose only the required MQTTS port through a network design you control, and point your MQTT hostname to that endpoint. Preserve TLS through to CoreMQ and verify the certificate hostname. The package's default Service does **not** satisfy this secure network design on its own.
 
 ## Send a first encrypted message
 
-1. Reach the browser management interface through an authorized private route. For a local administration session, you can forward the internal management Service to loopback with `kubectl -n coremq port-forward service/<coremq-service> 8080:8080` and open `http://127.0.0.1:8080`. Log in with the initial administrator account. The port-forward is for local administration; it is not a public HTTPS endpoint.
+1. First confirm that the Service and network controls above prevent public access to ports 8080 and 1883. Reach the browser management interface through an authorized private route. For a local administration session, you can forward the Service to loopback with `kubectl -n coremq port-forward service/<coremq-service> 8080:8080` and open `http://127.0.0.1:8080`. Log in with the initial administrator account. The port-forward is for local administration; it does not change the Service's external exposure.
 2. Under **Configure > Identities**, create a separate test client account. Configure its publish and subscribe message policies for a narrow test topic, such as `demo/first`. Administrator login and MQTT client permissions are separate. Review [users](../users.md), [policies](../policies.md), and [endpoints](../endpoints.md).
 3. Confirm that the MQTTS listener is enabled, your TCP endpoint is reachable on port 8883, DNS resolves to it, and the certificate validates for the hostname. Use an MQTT client that verifies TLS; never use its insecure-certificate option to make this check pass.
 4. With Eclipse Mosquitto clients **2.1 or later**, place the test username, password, hostname, port, and certificate authority settings in a local file accessible only to you. For example, `client.conf` can contain the following options, one per line. Replace every placeholder with your deployment's values and protect or delete the file after the test:
