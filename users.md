@@ -23,3 +23,16 @@ A **certificate authority** establishes certificate trust. It is not a user acco
 Authentication support depends on the listener configuration and build; CoreMQ is no longer limited to username/password authentication. External login to the management UI is described in [sign-in providers](sign-in-providers.md); that login flow is separate from MQTT client authentication.
 
 See [roles](roles.md), [policies](policies.md), and [endpoints](endpoints.md).
+
+## Certificate authority and identity checks
+
+Upload public CA certificates under **Certificate authorities**, then configure the listener's intended trust/authentication settings. A trusted chain alone does not assign a device role. Create the certificate identity/backing account, map the supported certificate identity field and client-ID rules, and assign only its message role. Test an authorized certificate, an untrusted certificate, a revoked/disabled identity and an unrelated client ID.
+
+```text
+coremq security authorities list
+coremq security authorities put example-ca --schema
+coremq security identities put device-17 --schema
+coremq users certificate set <user-id> --schema
+```
+
+The registered-account certificate command expects `certificateBase64` for a DER client certificate; endpoint-server upload uses PFX and is a different operation. Follow your deployment's renewal/revocation process. Device revocation service commands need a scoped workload token; an ordinary administrator token does not authorize them. Never attach private key material to support reports.

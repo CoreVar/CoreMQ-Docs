@@ -1,0 +1,43 @@
+{
+  "captured": "2026-09-30",
+  "sourceCommit": "e5b5eb112f8b7c2d8a4821fbaba99778d81741e7",
+  "edition": "local source-built, synthetic disposable data",
+  "screenshots": [
+    {
+      "file": "broker-overview.jpg",
+      "scope": "overview navigation/counters",
+      "sha256": "64b2ae3398d19546b5e619c16149c94c1ce3ec5b01a777b5dc714fb17a25c7c0"
+    },
+    {
+      "file": "configure-identities.jpg",
+      "scope": "identity directory and Configure tabs",
+      "sha256": "ff0387ed4e9c7ad4a103e9b3cbf1d0043da3b63f40400f0ad36de2ff7ea642b7"
+    },
+    {
+      "file": "configure-endpoints.jpg",
+      "scope": "listener list",
+      "sha256": "a9321a1d8f3a0753ea2f1d6211a98d06b721b4cc882c7ff96788d7f1bb1d60e4"
+    },
+    {
+      "file": "configure-system-events.jpg",
+      "scope": "enabled persistent setting after CLI revision2 and UI reload",
+      "sha256": "dfd7c5ee9f0a014895abae79d32560208b25eaf1583e3610385417451227f93b"
+    },
+    {
+      "file": "configure-providers.jpg",
+      "scope": "provider directory read, no configured tenant",
+      "sha256": "fa28b01655d62501e5388ea044f726d32f69a66ce0ef6005f39530f3e9c34ace"
+    },
+    {
+      "file": "provider-editor.jpg",
+      "scope": "provider presets, role claim/mappings and HTTPS save boundary; empty credentials",
+      "sha256": "b991192ee6c2d092e14c1911f9b7c5c317ef00f5b2ca7da912426a686a1ead86"
+    },
+    {
+      "file": "bridge-editor.jpg",
+      "scope": "connection purpose, TLS, routing and validation controls; cancelled without creation",
+      "sha256": "192959571ea04adfc71eefaf90f4357e5169dd23fd615e1faf055776428b1023"
+    }
+  ],
+  "exclusions": "No customer or organization data; no external tenant, portal or Marketplace qualification."
+}

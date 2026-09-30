@@ -1,0 +1,27 @@
+name: CoreMQ documentation
+on:
+  push:
+    branches: [main, 'dev/**', 'docs/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: documentation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+      - name: Validate links, examples and render documentation
+        run: dotnet run --project tools/DocsBuild.csproj -- . .build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coremq-documentation-${{ github.sha }}
+          path: .build
+          retention-days: 7

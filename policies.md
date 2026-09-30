@@ -1,71 +1,55 @@
-# Policies
+# Topic policies
 
-Policies can be defined to restrict control over publishing/subscribing to various topics.
+Message policies control publishing and subscribing independently. They have global, role and user scopes. Management privileges are separate from message authorization.
 
-Policies exist in three scopes: global, role, and user. They are applied in that order. Within each scope, each policy can define an order (lowest-to-highest) in which it is applied within that scope. For role-based policies, because a user can have many roles assigned to them, the highest-allowed role is applied. Multiple topics can be specified for a single policy, as well as MQTT wildcards (+ and #) can be specified within the topic.
+## Precedence
 
-By default, no policies exist and any user can publish/subscribe to any topic. It is recommended to add a default global policy which denies publishing/subscribing to all topics.
+Matching policies are evaluated in ascending order within a scope; the last matching explicit Allow/Deny wins there. NotSet leaves the action undecided. Use unique order numbers for overlapping rules rather than relying on tie ordering.
 
-## Global Policies
+1. Use the global result if any policy matched.
+2. Evaluate assigned roles. An allow from **any** role wins over denies from other roles; a decided role result replaces the global result.
+3. A matching user policy replaces the earlier result.
+4. If no scope decided, ordinary topics default to allowed. System subscriptions default to denied. Clients/bridges cannot publish into the reserved local `$SYS` namespace.
 
-Global policies are the first policies applied for any publish/subscribe action.
+A global deny is a baseline that narrower role/user grants can override. It is not an unconditional deny across scopes. Inspect all roles and direct policies when diagnosing an unexpected grant.
 
-### Add a Global Policy
+## Worked telemetry example
 
-Adding a global policy can be done within the CoreMQ dashboard.
+Set global publish/subscribe Deny on `#` at order 0. Create a `Telemetry client` role with publish Allow on `devices/17/telemetry` and subscribe Allow on `devices/17/commands/#`. Use separate rules and NotSet for the action each rule does not decide. Assign only that role and remove unintended direct grants.
 
-#### 1. Navigate to the Global Policies
-1. Click the Configure link on the left navigation bar
-2. Click the Global Policies tab button
+| Client action | Expected result |
+| --- | --- |
+| Publish `devices/17/telemetry` | Role allow |
+| Publish `devices/18/telemetry` | Global deny |
+| Subscribe `devices/17/commands/#` | Role allow |
+| Subscribe `devices/18/commands/#` | Global deny |
+| Subscribe `$SYS/coremq/v1/#` | Deny unless explicitly granted |
 
-#### 2. Configure a New Global Policy
-1. Click the Add Global Policy button
-2. Select permissions for Publish/Subscribe. The options are: NotSet, Allow, and Deny.
-3. Set the order to a number representing the order to apply the policy, lowest-to-highest.
-4. Add any number of topics to the rule. MQTT wildcards (+ and #) can be used. A catch-all topic would be `#`
-5. Click OK.
+MQTT `+` matches one level and `#` matches remaining levels. `#` does not match `$`-prefixed system topics. Test actual delivery as well as subscription requests; broad subscriptions do not guarantee access to every matching publication.
 
-## Role-based Policies
+## UI and CLI
 
-Role-based policies enable policies to be configured at a role level. When a user is assigned a role, the policy is applied as a part of publish/subscribe actions. Because a user can have many roles associated with them, the highest-allowed role is the one that is applied.
+For global rules open **Configure > Global Policies > Create policy**. For role rules select the role under **Configure > Roles** and add its policy. For user rules edit the local account under **Configure > Identities** and open its policies. Select Publish/Subscribe, order and filters; save and test with the affected account.
 
-### Add a Role-based Policy
+```text
+coremq policies add --schema
+coremq policies add --file default-deny.json
+coremq roles policies add <role-id> --file telemetry-publish.json
+coremq users policies list <user-id>
+```
 
-Adding a role-based policy can be done within the CoreMQ dashboard.
+`default-deny.json`:
 
-#### 1. Navigate to the Role's Page
-1. Click the Configure link on the left navigation bar
-2. Click the Roles tab button
-3. Select the role you want to add the policy to
+```json
+{ "type": "message", "publish": "Deny", "subscribe": "Deny", "order": 0, "topics": ["#"] }
+```
 
-#### 2. Configure a New Role-based Policy
-1. Click the Add Policy button
-2. Select permissions for Publish/Subscribe. The options are: NotSet, Allow, and Deny.
-3. Set the order to a number representing the order to apply the policy, lowest-to-highest.
-4. Add any number of topics to the rule. MQTT wildcards (+ and #) can be used. A catch-all topic would be `#`
-5. Click OK.
+`telemetry-publish.json`:
 
-## User Policies
+```json
+{ "type": "message", "publish": "Allow", "subscribe": "NotSet", "order": 10, "topics": ["devices/17/telemetry"] }
+```
 
-Policies can be configured at the user level. These policies are the last to be applied.
+Use matching CLI `--schema` for create/update differences. Read back after writing and test real authorization. Keep a tested local recovery login before changing administrative/provider mappings.
 
-### Add a User Policy
-
-Adding a user policy can be done within the CoreMQ dashboard.
-
-#### 1. Navigate to the User's Policies Page
-1. Click the Configure link on the left navigation bar
-2. Click the Users tab button
-3. Select the user you want to add the policy to
-4. Click the Policies tab button
-
-#### 2. Configure a New User Policy
-1. Click the Add Policy button
-2. Select permissions for Publish/Subscribe. The options are: NotSet, Allow, and Deny.
-3. Set the order to a number representing the order to apply the policy, lowest-to-highest.
-4. Add any number of topics to the rule. MQTT wildcards (+ and #) can be used. A catch-all topic would be `#`
-5. Click OK.
-
-## Conclusion
-
-By being able to optionally deny/allow publish/subscribe actions at a global, role-based, and user level, many different types of permission models can be applied.
+Next: [Roles](roles.md), [system permissions](system-events.md), [troubleshooting](operations.md).

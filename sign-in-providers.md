@@ -62,3 +62,30 @@ Example CoreID provider (use your actual issuer, tenant and client):
 `Bindings` and `AuthorizationSource: Local` are no longer supported. Configure role mappings and provider-side assignments instead. The provider API does not expose stored secrets. Organization directory observations are stored independently beside the provider configuration in `organization-identities.json`; they have no local account foreign key and never determine permission grants.
 
 The local broker UI provides provider configuration. CoreControl/portal configuration parity must be verified separately; this document does not claim that provider changes are remotely editable through every management surface.
+
+## Provider setup checklist
+
+![Add provider editor showing OIDC presets, callback, role source and role mappings](assets/provider-editor.jpg)
+
+The September 30 local editor capture uses synthetic data and empty credentials. The HTTP evaluation fixture deliberately cannot save providers: production provider changes require the broker's HTTPS origin.
+
+Choose a **Provider preset**, then confirm every generated value against the registration's discovery metadata. A preset assists configuration; it does not provision the provider application or assign its users.
+
+| Preset | Registration and verification task |
+| --- | --- |
+| CoreID | Prefer Connect CoreID for guided registration; verify the organization/application assignments and current-access revocation described above |
+| Microsoft Entra ID | Register the exact HTTPS web callback, select the intended tenant and emit application-role values in the signed ID token; verify an unauthorized tenant is rejected |
+| Auth0 | Create an OIDC web application and allow the exact callback; arrange a signed ID-token role claim, configure its exact claim name and map its values |
+| Google Workspace | Register an OIDC web client and callback; verify the issuer and intended tenant restriction. Email domain or Workspace membership alone does not supply mapped management roles; qualify the required claim/federation path before enabling access |
+| Amazon Cognito | Register a user-pool application client and callback; use the user-pool discovery issuer, verify the signed group/role claim and configure that exact claim name and values |
+| Other OpenID Connect provider | Confirm discovery, authorization-code/S256 support, issuer/audience/tenant validation and a signed role claim; do not substitute a SAML-only or generic OAuth registration |
+
+Test one assigned and one unassigned identity, correct and incorrect tenant, session expiration, role removal and local recovery access. No live external provider qualification is claimed by this UI review.
+
+For CoreID, verify the trusted authority and exact broker HTTPS origin with the operator before starting **Connect CoreID**. Retain local recovery access. After approval, assign a test application role in the selected organization, map it to one intended management permission, and test sign-in plus revocation/current-access failure. Guided local activation is distinct from remote portal onboarding; that path remains separately qualified.
+
+For Microsoft Entra ID, register a web application with the exact broker callback, select the intended tenant and configure application-role claims for the signed ID token. Map exact application role values and test a second, unauthorized tenant. For another OIDC provider, verify discovery issuer and application-role claim behavior rather than treating a generic OAuth/SAML registration as equivalent. This is a manual OIDC path, not a provider-specific guided wizard. No live Entra/other-tenant qualification is claimed by this review.
+
+After a manual save/removal, inspect restart-required status, perform the approved restart and use a fresh sign-in to verify roles. Diagnose callback mismatch, issuer/audience/tenant failure, missing role claim and unassigned roles before granting broader permissions. A provider's successful discovery response does not establish the user's access. Multi-replica activation and cross-portal writes must pass against the exact release.
+
+Direct reads and `put --schema` are described in [CLI](cli.md). September 30 synthetic local checks verified the provider editor can read settings. Mutations require HTTPS; guided/provider tenant and remote workflows remain separately qualified.

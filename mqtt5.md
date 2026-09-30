@@ -1,6 +1,6 @@
 # MQTT 5 support
 
-CoreMQ implements MQTT 5 behavior on MQTTnet 5.2.0.1603 with additional broker policy, routing and persistence handling. Do not interpret this as complete MQTT 5 conformance or formal certification.
+The reviewed broker source pins the MQTTnet fork `5.2.0-local.will.5e8d78b4`, with additional broker policy, routing and persistence handling. The earlier `5.2.0.1603` description does not identify this dependency. Record the installed dependency and immutable broker artifact when comparing results. Do not interpret a dependency version as complete MQTT 5 conformance or formal certification.
 
 A recent development TCP conformance run completed 50 cases: **41 passed, 0 failed, 6 unsupported, 3 not run**. The unrun cases concerned WebSocket/TLS/mTLS in that particular run; other transport checks do not make this run complete.
 

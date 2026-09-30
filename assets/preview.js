@@ -1,0 +1,1 @@
+document.getElementById('nav-search').addEventListener('input',event=>{const q=event.target.value.toLowerCase();document.querySelectorAll('nav a').forEach(a=>{a.hidden=!a.textContent.toLowerCase().includes(q)});});

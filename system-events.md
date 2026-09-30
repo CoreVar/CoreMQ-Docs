@@ -73,15 +73,24 @@ MQTT's 65,535-byte limit is dropped and counted. There is no durable event journ
 offline replay guarantee, or total ordering across nodes. Consumers should use
 `eventId` for deduplication and query current state when reconciling status.
 
-Disable emission with `SystemEvents:Enabled=false` (environment variable
-`SystemEvents__Enabled=false`). This setting does not remove the reserved-topic
-publish protection. Configuration currently uses the broker configuration file
-or environment; there is no dedicated Configure UI toggle yet.
+The reviewed source includes **Configure > System events** and persistent CLI/API settings:
+
+```text
+coremq system-events show
+coremq system-events put --schema
+coremq system-events put --file settings.json
+```
+
+Use `{ "enabled": false, "expectedRevision": 7 }` with the actual revision from the read; an initial unsaved setting has null revision. Read back after saving and reject stale revisions. Peer instances refresh shared settings every two seconds. `SystemEvents:Enabled` (environment `SystemEvents__Enabled`) is the startup fallback; saved settings take precedence. Disabling emission retains reserved-topic protection. September 30 isolated local UI/CLI checks verified save/read-back, a stale null revision rejected with HTTP 409, CLI update to revision 2 and UI reload; configuration availability still depends on the exact release/portal package. See [release status](release-status.md) and [coverage](remote-management.md).
 
 Message publish/delivery events are deliberately absent to avoid recursive
 monitoring traffic. Authentication failures, certificate expiry, policy changes,
 CoreControl enrollment changes, and audit events are not yet connected to this
 stream. They must not be inferred from the lifecycle events above.
+
+![System events editor with persistent emission enabled and Save/Reload controls](assets/configure-system-events.jpg)
+
+Synthetic local screenshot after CLI update and UI reload on September 30. The HTTP fixture does not qualify cloud or portal writes.
 
 ## Validation status
 

@@ -1,5 +1,13 @@
 # Documentation changes
 
+## 2026-09-30 — task guides and scoped validation
+
+- Added local/containers and provider deployment guidance, backup/restore, operations, schemas, measured sizing, upgrade/rollback and uninstall.
+- Corrected policy precedence, Configure labels, persistent system-event controls, exact MQTTnet fork and current release evidence.
+- Added seven synthetic local screenshots, an accessible architecture diagram and provider/bridge workflows.
+- Expanded the native/module CLI reference; validated 49 live/schema/mutation checks, MQTT narrow policy behavior and System events UI/CLI revisions against reviewed source.
+- Added automated link/heading/example checks, Markdown rendering and a short-retention documentation artifact. Scores and remaining evidence gaps are in [quality review](quality-review.md).
+
 ## 2026-09-12 — identity directory
 
 - Clarified the combined identity list, account types, provider labels and type-specific actions.

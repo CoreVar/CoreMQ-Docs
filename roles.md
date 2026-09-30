@@ -1,36 +1,39 @@
 # Roles
 
-Users can be assigned roles, which will allow properties of those roles to be applied to the user.
+A local role groups message permissions for accounts and certificate-backed accounts. **User Manager** and **Endpoint Manager** are built-in management roles; grant them only where those operations are needed. A telemetry device normally needs a message role.
 
-Two system roles exist: User Manager and Endpoint Manager. These roles are allowed to manage users and endpoints, respectively.
+## Create and assign a message role
 
-### Add a Role
+1. Open **Configure > Roles > Create role** and enter `Telemetry client`.
+2. Open the role and add a policy for a narrow topic filter. Review [policy precedence](policies.md).
+3. Open **Configure > Identities**, edit the local account and assign that role. Inspect direct policies too; they can override role results. Built-in management roles are assigned from the account's **Advanced** tab.
+4. Test an allowed and a denied topic with the affected MQTT account. Configured accounts exist independently of live connections.
 
-#### 1. Navigate to the Roles
-1. Click the Configure link on the left navigation bar
-2. Click the Roles tab button
+CLI equivalents use IDs returned by list/create, and role **names** inside membership arrays:
 
-#### 2. Configure a new Role
-1. Click the Add Role button
-2. Enter a name for the role
-3. Click OK
+```text
+coremq roles list
+coremq roles add --schema
+coremq roles add --file role.json
+coremq roles policies add <role-id> --file telemetry-policy.json
+coremq users roles update <user-id> --file membership.json
+coremq users roles list <user-id>
+```
 
-### Add a Role-based policy
+`role.json`:
 
-Adding a role-based policy can be done within the CoreMQ dashboard.
+```json
+{ "name": "Telemetry client" }
+```
 
-#### 1. Navigate to the Role's Page
-1. Click the Configure link on the left navigation bar
-2. Click the Roles tab button
-3. Select the role you want to add the policy to
+`membership.json`:
 
-#### 2. Configure a New Role-based Policy
-1. Click the Add Policy button
-2. Select permissions for Publish/Subscribe. The options are: NotSet, Allow, and Deny.
-3. Set the order to a number representing the order to apply the policy, lowest-to-highest.
-4. Add any number of topics to the rule. MQTT wildcards (+ and #) can be used. A catch-all topic would be `#`
-5. Click OK.
+```json
+{ "add": ["Telemetry client"], "remove": [] }
+```
 
-## Conclusion
+An allow from one role wins over a deny from another. Test combined roles before granting them. Removing administrative roles preserves other roles; verify effective access after the change.
 
-Role-based access control (RBAC) enables users and policies to be managed at scale.
+## Organization application roles
+
+Organization identities are independent of local accounts. Assign roles in the provider for this broker application, then map exact application-role values to permitted CoreMQ management roles. Matching names/emails do not merge accounts or inherit local policies. See [sign-in providers](sign-in-providers.md).
