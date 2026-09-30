@@ -43,6 +43,7 @@ These scores assess the revised guides and scoped local rendering/behavior check
 ## Validation evidence
 
 - Markdown build: 24 pages, local targets/anchors, one H1, image alternatives and fenced command paths checked with pinned Markdig 0.40.0. Preview styles differ from the hosted portal; hosted navigation/assets require a separate publication check.
+- Candidate 2177 owner receipts add six scoped browser workflow rows and 12 native/API policy checks, bound to exact source/image/Windows CLI archive hashes. Native changes were reconciled in fresh browser reads; six fixtures were removed with 404 absence. No runtime helpers were rerun by the documentation task.
 - Native CLI source build passed. Forty-nine live reads, request schemas and synthetic role/global/role-policy/user/membership mutations passed at Broker `e5b5eb1`.
 - MQTT 5 loopback first-message proof passed: allowed-topic publish/observer delivery and denied outside-topic publish/subscribe (`0x87`). This is not complete MQTT conformance.
 - Isolated local System events UI save and CLI read-back passed; stale revision rejected; CLI update to revision 2 was visible after UI reload. Provider/bridge editor reads passed; no external tenant/bridge was provisioned.
@@ -52,7 +53,7 @@ These scores assess the revised guides and scoped local rendering/behavior check
 
 ## Residual product gaps
 
-- Candidate 2133 role-policy Edit was verified Not found; the user-policy route and direct single-policy GET/PUT are also absent in source. Native CLI list/add/remove and source-level remote scoped put are distinct surfaces. Existing-policy editing is held pending exact corrected-candidate evidence; create/delete/read checks are not edit qualification.
+- Candidate 2133's missing policy route remains historical. Exact candidate 2177 local browser/direct/native edits passed with read-back, ownership/input rejection and cleanup. Remote/security changes, restart persistence and multi-replica qualification remain open; the later development endpoint guard is excluded from 2177.
 
 - An apparent local editor/API mismatch was traced to concurrent broker cookies sharing localhost across ports; isolated session recheck passed. No product defect is inferred from that initial failure.
 - CoreControl live lifecycle/rotation, cross-portal authorized writes, protected upload and multi-replica activation remain separately qualified.

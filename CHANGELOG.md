@@ -1,5 +1,9 @@
 # Documentation changes
 
+## 2026-09-30 — candidate 2177 scoped policy qualification
+
+- Added corrected local role/user policy modal workflows and native get/update command examples after exact 2177 browser/API/native checks passed. Bound evidence to immutable source/image/CLI artifacts, retained the 2133 failure and remote/restart/full-release holds.
+
 ## 2026-09-30 — policy-edit qualification update
 
 - Marked candidate 2133 existing role/user policy editing held after qualification found an unregistered browser route and missing scoped single-policy GET/PUT APIs. Preserved create/list/membership and MQTT evidence without treating them as an edit pass.

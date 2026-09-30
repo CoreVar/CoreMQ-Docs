@@ -6,7 +6,7 @@ Open **Configure > Identities** to see local accounts, certificate identities an
 
 Choose **Create User**, enter the account information and password, and assign the required roles. Grant **User Manager** or **Endpoint Manager** only when the account needs management access. MQTT publishing and subscribing are controlled by message policies; management privileges and message permissions serve different purposes.
 
-Edit the account to manage its basic information, credentials and roles, and to view its policy collection. Candidate 2133's **Edit** link for an existing user policy leads to an unregistered route; that policy-edit workflow remains held. See [policy limitations](policies.md#ui-and-cli). The technical details identify the stable local user ID. Organization sign-in identities are independent and are not attached to a local account.
+Edit the account to manage its basic information, credentials and roles, and to view its policy collection. Candidate 2177's corrected policy modal and direct/native get/update passed against a disabled synthetic user, with API/browser read-back and cleanup. Follow the [scoped policy-edit procedure](policies.md#edit-an-existing-role-or-user-policy). Candidate 2133's missing route remains historical; these checks do not qualify remote edits, enabled-identity behavior or restart persistence. The technical details identify the stable local user ID. Organization sign-in identities are independent and are not attached to a local account.
 
 ## Organization identities
 

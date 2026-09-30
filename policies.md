@@ -50,8 +50,35 @@ coremq users policies list <user-id>
 { "type": "message", "publish": "Allow", "subscribe": "NotSet", "order": 10, "topics": ["devices/17/telemetry"] }
 ```
 
-**Browser policy editing is held for candidate 2133.** A role-policy **Edit** click was verified to open an unregistered route; the corresponding user-policy route is also absent in the reviewed source. Direct broker APIs lack scoped single-policy GET/PUT, and its native CLI provides policy list/add/remove. The remote module already has source-level policy list/put/delete with scope, scope ID and expected revision, but actual deployed remote edit/read-back remains separately held. The create/list/membership and MQTT checks in this review do not qualify editing an existing policy. Do not assume a correction is deployed from a source fix or passing create/delete check; require the corrected immutable candidate and authorized edit/read-back plus persistence evidence.
+## Edit an existing role or user policy
 
-Use the installed CLI `--schema` for the documented operations; this guide does not promise a single-policy update command. Read back after writing and test real authorization. Keep a tested local recovery login before changing administrative/provider mappings.
+The corrected local/browser and direct/native path passed against **candidate `0.0.0-ci.2177`**, source `93790dc9b1a17390b0433bd3422355f76c584695`, using the verified Azure image and Windows CLI. Install the matching approved broker/CLI artifacts before using these commands. Other packages and deployed remote editing need their own evidence.
+
+Open the role's policy collection under **Configure > Roles**, or the local account's policies under **Configure > Identities**. Choose **Edit** to open the policy modal. Review topics, order, Publish and Subscribe; save, reopen and read back the values. Use an affected test account to verify allowed and denied messaging before applying a changed policy to active traffic.
+
+For native direct management, obtain both IDs from the owning collection. The update request contains `topics`, `order`, `publish` and `subscribe`:
+
+```text
+coremq roles policies get <role-id> <policy-id>
+coremq roles policies update <role-id> <policy-id> --file policy-update.json
+coremq roles policies get <role-id> <policy-id>
+coremq users policies get <user-id> <policy-id>
+coremq users policies update <user-id> <policy-id> --file policy-update.json
+coremq users policies get <user-id> <policy-id>
+```
+
+Example `policy-update.json` for a narrow test-topic deny:
+
+```json
+{ "topics": ["qualification/test/#"], "order": 20, "publish": "Deny", "subscribe": "Deny" }
+```
+
+Select the intended permissions rather than copying a test deny into an active policy. Keep the owner and policy IDs together; a policy belonging to another role/user was rejected with 404, and empty topics with 400, in the 2177 checks. Fresh API and browser reads verified topic/order/Deny values after native edits. The six disposable policy/user/role fixtures were removed and absence confirmed.
+
+**Historical candidate 2133 failure remains recorded:** role-policy Edit opened an unregistered route; the corresponding user-policy route and direct single-policy GET/PUT were absent in source. Its native CLI had list/add/remove. The 2177 corrected modal and native get/update evidence supersedes that local edit hold only for the tested artifacts.
+
+The remote module uses separate scoped list/put/delete operations with scope ID and expected revision. Deployed remote/security mutations, restart persistence, multi-replica behavior and full release qualification remain separately gated. Candidate 2177 does not contain the later development endpoint `--include-etag`/`--if-match` guard changes.
+
+Use installed help/request schemas, read back every write and test real authorization. Retain a tested recovery login before administrative/provider changes.
 
 Next: [Roles](roles.md), [system permissions](system-events.md), [troubleshooting](operations.md).

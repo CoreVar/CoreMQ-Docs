@@ -32,7 +32,7 @@ coremq users roles list <user-id>
 { "add": ["Telemetry client"], "remove": [] }
 ```
 
-Candidate 2133's browser **Edit** action on an existing role policy is held because its target route is unregistered. Role creation/assignment and policy creation/listing are separate checks. See the [policy-edit qualification boundary](policies.md#ui-and-cli) before changing an existing policy.
+Candidate 2177's role-policy **Edit** opens the corrected modal; local browser CRUD and direct/native edits passed with fresh API/browser read-back. Use the matching approved artifacts and follow the [scoped policy-edit procedure](policies.md#edit-an-existing-role-or-user-policy). Candidate 2133's unregistered-route failure remains historical; remote/restart qualification remains separate.
 
 An allow from one role wins over a deny from another. Test combined roles before granting them. Removing administrative roles preserves other roles; verify effective access after the change.
 

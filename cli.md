@@ -114,6 +114,8 @@ Commands below marked **JSON** take `--file`, `--file -`, or `--data`.
 | `users admin revoke <id>` | Remove those two roles, preserving other roles |
 | `users policies list <id>` | List user policies |
 | `users policies add <id>` | **JSON**: add user access policy |
+| `users policies get <id> <policyId>` | Candidate 2177: read one policy belonging to this user |
+| `users policies update <id> <policyId>` | Candidate 2177, **JSON**: update topics/order/publish/subscribe |
 | `users policies remove <id> <policyId>` | Remove user policy |
 | `roles list` | List roles |
 | `roles get <id>` | Read role |
@@ -122,6 +124,8 @@ Commands below marked **JSON** take `--file`, `--file -`, or `--data`.
 | `roles remove <id>` | Delete role |
 | `roles policies list <id>` | List role policies |
 | `roles policies add <id>` | **JSON**: add role access policy |
+| `roles policies get <id> <policyId>` | Candidate 2177: read one policy belonging to this role |
+| `roles policies update <id> <policyId>` | Candidate 2177, **JSON**: update topics/order/publish/subscribe |
 | `roles policies remove <id> <policyId>` | Remove role policy |
 | `policies list` | List global access policies |
 | `policies get <id>` | Read global policy |
@@ -276,3 +280,7 @@ The September 30 source-bound local verification built both broker and standalon
 A CLI prompt does not imply a browser/portal terminal has a supported secret-input adapter. Portal management uses its own protected input/upload controls. An unavailable input channel must fail safely, without echoing a secret or reading the server console. Deployment-only database, Redis, secret mounts and enrollment settings remain operator configuration; the CLI does not invent live-edit APIs for them.
 
 Next: [monitoring and diagnostics](operations.md), [topic policies](policies.md), [release status](release-status.md).
+
+## Candidate 2177 scoped policy editing
+
+The four role/user policy get/update commands above passed with the exact candidate 2177 Windows CLI and Azure broker image, source `93790dc9b1a17390b0433bd3422355f76c584695`. See [workflow and update JSON](policies.md#edit-an-existing-role-or-user-policy). Twelve native/API checks include fresh reads, foreign-owner rejection and invalid input; browser reads reconciled the native changes. Remote module scoped put and expected revision are a separate contract with deployed acceptance still held. Later development endpoint concurrency options are not part of candidate 2177.

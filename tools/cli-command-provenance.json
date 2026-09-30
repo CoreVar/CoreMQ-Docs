@@ -1,0 +1,30 @@
+{
+  "baselineSourceCommit": "e5b5eb112f8b7c2d8a4821fbaba99778d81741e7",
+  "extensions": [
+    {
+      "sourceCommit": "93790dc9b1a17390b0433bd3422355f76c584695",
+      "candidate": "0.0.0-ci.2177",
+      "paths": [
+        "roles policies get",
+        "roles policies update",
+        "users policies get",
+        "users policies update"
+      ],
+      "scope": "Exact Windows CLI/Azure image direct policy qualification; not remote or release qualification",
+      "receiptHashes": {
+        "browser2177-policy-receipt.json": {
+          "copy": "owner2177-browser2177-policy-receipt.json",
+          "sha256": "f6d435a2f10ce01f97d164e2872b5f2f1e973d891aeadb7b05a591d242b0a793"
+        },
+        "policy2177-native-api-receipt.json": {
+          "copy": "owner2177-policy2177-native-api-receipt.json",
+          "sha256": "2766c320055ffa7dd0c635436778462a2aea8e05ab23d7927aa687305f18d3e5"
+        },
+        "candidate2177/verified-download-receipt.json": {
+          "copy": "owner2177-verified-download-receipt.json",
+          "sha256": "0ce61184dbf0126b14bd032136da6165dda503750b03a99ff49c9609f2dfdca9"
+        }
+      }
+    }
+  ]
+}
