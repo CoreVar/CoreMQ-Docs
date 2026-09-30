@@ -34,13 +34,13 @@ Current candidate commands include browser sign-in providers, organizational ide
 
 ## Organization sign-in and identities
 
-`coremq sign-in providers list` reads saved configuration and its revision; `coremq sign-in providers status` reads runtime provider status. Save a reviewed provider definition with `coremq sign-in providers put --file provider.json`. Use `--schema` on the save command for the JSON contract. Saving requires HTTPS and the current configuration revision. Manually saved changes require a broker restart; the guided CoreID flow is separate.
+`coremq sign-in providers list` reads saved configuration and its revision; `coremq sign-in providers status` reads runtime provider status. Save a reviewed provider definition with `coremq sign-in providers put --file provider.json`. Use `--schema` on the save command for the JSON contract. Saving requires HTTPS and the current configuration revision. Manually saved changes require a broker restart; the guided CoreIdentity flow is separate.
 
 Remove a manually configured provider with `coremq sign-in providers remove <id> --revision <revision>` using its current saved revision. Saving or removing a provider requires a restart before that change becomes active.
 
 On a CoreControl route, provider list/put/remove and organizational identity list/access use the product's dedicated capabilities. Remote writes require a stable `--operation-id` and the numeric `expectedRevision` returned by the remote snapshot; direct broker provider configuration uses its string revision. Do not interchange the two revision formats. A client secret supplied through a protected input file or stdin is sealed for the specific provider before the command is sent. Permission checks remain enforced by both CoreControl and the broker.
 
-`coremq organization identities list` lists observed organizational identities. `coremq organization identities access <providerId> <identityId>` reads current CoreID application roles and effective broker permissions for an observed identity. Organizational identities remain independent of local broker accounts.
+`coremq organization identities list` lists observed organizational identities. `coremq organization identities access <providerId> <identityId>` reads current CoreIdentity application roles and effective broker permissions for an observed identity. Organizational identities remain independent of local broker accounts.
 
 ## Feedback and device revocation
 

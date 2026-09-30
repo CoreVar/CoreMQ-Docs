@@ -11,7 +11,7 @@ The product requirement is that every configurable enhancement works through the
 | Bridge settings, including stream profiles | Local editor/API, CLI and CoreControl configuration contracts | Portal package adoption, new profile presentation and remote service qualification |
 | Browser sign-in providers | Local editor/HTTPS API/CLI; CoreControl read/write/delete and shared portal editor | Live authorized remote round trips; multi-replica persistence and activation; guided remote onboarding |
 | System event emission settings | Configure editor, CLI, revisioned CoreControl contract and shared portal editor | Complete live portal write/read-back qualification |
-| Identity directory | Shared searchable/sortable list of local, certificate and observed organization identities; unified directory and current CoreID access reads verified through the development Management Portal | Authorized mutation coverage, certificate editor and multi-page live acceptance, production qualification |
+| Identity directory | Shared searchable/sortable list of local, certificate and observed organization identities; unified directory and current CoreIdentity access reads verified through the development Management Portal | Authorized mutation coverage, certificate editor and multi-page live acceptance, production qualification |
 | System event subscription permissions | Existing message-policy mechanisms | Full cross-portal round-trip qualification |
 
 A portal must consume compatible versions of the internal CoreMQ management controls and command packages, and the deployment must advertise the required capabilities. Updating the broker alone does not update a portal's controls. A visible control or capability manifest is not proof of an end-to-end working mutation.

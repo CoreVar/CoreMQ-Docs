@@ -10,7 +10,7 @@
 
 - Documented Configure navigation, dashboard activity and unified identity management.
 - Added MQTT bridges and outbound Kafka/Event Hubs/CoreStream guidance with delivery limitations.
-- Added guided CoreID registration with browser consent, verified account binding and immediate activation; documented manual providers and outstanding remote-management coverage.
+- Added guided CoreIdentity registration with browser consent, verified account binding and immediate activation; documented manual providers and outstanding remote-management coverage.
 - Added system event topics, subscription permissions and delivery semantics.
 - Added CLI, CoreControl/portal coverage, feedback and MQTT 5 status guides.
 - Removed the outdated statement that only username/password authentication exists.
