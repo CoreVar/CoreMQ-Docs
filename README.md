@@ -1,40 +1,73 @@
 # CoreMQ documentation
 
-CoreMQ is an MQTT broker with a browser management interface, a `coremq` CLI, and optional CoreControl remote management in cloud builds. Start with your task below. These guides describe the reviewed development implementation; [release status](release-status.md) distinguishes live evidence from held features.
+Connect devices, manage messaging and operate your broker. Choose a task to get started, or browse the guides by topic.
 
-## Start and deploy
+## Start with a task
 
-- [Install locally or with Docker; send a first message](get-started.md)
-- [Choose a deployment: Azure, AWS, GCP or private Kubernetes](deployment.md)
-- [Azure Marketplace AKS installation and network prerequisites](azure/setup.md)
-- [Secure endpoints and manage certificates](endpoints.md)
+::::doc-cards
+:::doc-card
+### [Send your first message](get-started.md)
+Install locally or with Docker, connect a client and publish a test message.
+:::
+:::doc-card
+### [Deploy in your cloud](deployment.md)
+Compare Azure, AWS, GCP and private Kubernetes paths and check their prerequisites.
+:::
+:::doc-card
+### [Secure and configure](configure.md)
+Set up endpoints, identities, roles and topic permissions.
+:::
+:::doc-card
+### [Operate CoreMQ](operations.md)
+Monitor your broker, diagnose a problem and collect useful support evidence.
+:::
+::::
 
-## Configure access and messaging
+:::doc-callout
+### Know your release
+These guides describe the reviewed development implementation. Record your broker version under **Configure > About** and check [release status](release-status.md) before relying on a feature. Installed Marketplace packages and remote controls have their own qualification limits.
+:::
 
-- [Find your way around Configure](configure.md)
-- [Local users, certificate identities and authorities](users.md)
-- [Roles](roles.md) and [topic policies with worked examples](policies.md)
-- [CoreID and other OIDC sign-in providers](sign-in-providers.md)
-- [MQTT bridges and Kafka/Event Hubs/CoreStream destinations](bridges.md)
-- [Payload schemas](schemas.md) and [system events](system-events.md)
-- [CLI authentication, input and task reference](cli.md)
-- [CoreControl registration, status, unregistration and portal coverage](remote-management.md)
+## Deploy and connect
 
-## Operate and get help
+- [Azure Marketplace setup](azure/setup.md): installation and network prerequisites.
+- [Endpoints and certificates](endpoints.md): listener security and connection settings.
+- [Sizing and availability](sizing.md): measured evidence and current capacity limits.
+- [CLI reference](cli.md): sign-in, request schemas and command examples.
 
-- [Monitoring, troubleshooting and support handoff](operations.md)
-- [Persistence, backup and restore](backup-restore.md)
-- [HA and measured sizing constraints](sizing.md)
+## Configure messaging and access
+
+::::doc-columns
+:::doc-column
+### Access
+
+- [Users and certificate identities](users.md)
+- [Roles](roles.md)
+- [Topic policies and worked examples](policies.md)
+- [CoreID and other sign-in providers](sign-in-providers.md)
+:::
+:::doc-column
+### Messaging
+
+- [Bridges and stream destinations](bridges.md)
+- [Payload schemas](schemas.md)
+- [System events](system-events.md)
+- [CoreControl remote management](remote-management.md)
+:::
+::::
+
+## Keep it running
+
+- [Backup and restore](backup-restore.md)
 - [Upgrade, rollback and uninstall](upgrade-uninstall.md)
 - [MQTT 5 support limits](mqtt5.md)
-- [Feedback and consent](feedback.md)
-- [Release behavior and known limitations](release-status.md)
-- [Changes](CHANGELOG.md) and [documentation assessment](quality-review.md)
+- [Product feedback and consent](feedback.md)
+- [What's new](CHANGELOG.md)
 
 ## How the parts fit
 
 ![MQTT clients use broker listeners; database and Redis support cloud state, bridges forward selected messages, and CoreControl carries outbound authorized management.](assets/coremq-architecture.png){width=800 style="max-width:100%;height:auto"}
 
-The CLI uses the HTTP(S) management origin. Redis is the cloud backplane; bridges route selected messages to other systems. CoreControl carries authorized remote commands, not application payloads. These paths have different credentials and permissions.
+The CLI uses the HTTP(S) management origin. Redis is the cloud backplane; bridges forward selected messages. CoreControl carries authorized remote commands. These paths have different credentials and permissions.
 
-Record the broker edition/version under **Configure > About** and compare approved image/chart identities. Updating docs does not upgrade installed Marketplace packages or portal controls. No production capacity or complete MQTT 5 qualification is implied by a successful build.
+For current evidence and remaining limitations, see [release status](release-status.md) and the [documentation review](quality-review.md).

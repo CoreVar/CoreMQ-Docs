@@ -1,5 +1,9 @@
 # Documentation changes
 
+## 2026-09-30 — reader experience and honest assessment
+
+- Reworked the overview into task cards and access/messaging columns. Added a few prerequisite/retirement callouts. Separated the user-rated published reader baseline of 4/10 from historical guide-content scores; a new live score requires hosted UX verification.
+
 ## 2026-09-30 — candidate 2177 certificate-authority limitation
 
 - Recorded the failed metadata-only CA edit separately from successful disabled-authority public PEM upload/replacement and cleanup; retained active trust, restart and remote qualification limits.

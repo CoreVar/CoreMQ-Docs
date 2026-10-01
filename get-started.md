@@ -2,6 +2,9 @@
 
 Use this path for an isolated evaluation. For cloud installations, start with [deployment choices](deployment.md); the Marketplace packages have different prerequisites and release status. Record the broker version and edition from **Configure > About**. Obtain the broker and CLI from the same approved release; these docs do not provide a public download for an unreleased candidate.
 
+> [!NOTE]
+> This walkthrough uses a disposable local broker. Complete the deployment and security checks before using an installation for active workloads.
+
 ## Local installation
 
 Extract the approved OS/architecture package into a directory you control. The broker executable is `coremq-broker`; `coremq` is its management CLI. A self-contained package includes its runtime. A framework-dependent build needs the .NET version specified by that build (the reviewed development source targets .NET 10).

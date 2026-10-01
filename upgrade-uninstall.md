@@ -18,6 +18,9 @@ Stop the rollout on readiness loss, unacceptable delivery/replay results or fail
 
 Use the pretested compatible rollback release. If state restore is required, quiesce traffic and follow [backup and restore](backup-restore.md), explicitly accounting for messages accepted since the backup. Verify local recovery access, policies, certificate validity, client sessions, bridge duplicate handling and remote command state before restoring traffic. Keep failure evidence and record the observed recovery point/time.
 
+> [!WARNING]
+> Preserve the required backup and prove resource ownership and dependencies before removing storage or shared infrastructure. An uninstall can remove the recovery path.
+
 ## Uninstall without losing customer data
 
 1. Inventory what the installation owns: release/namespace, workloads, service accounts/IRSA, temporary Secrets, state claims, databases, Redis, ingress/IPs, DNS, registries and log storage. Identify shared resources, retention obligations and a recovery path.

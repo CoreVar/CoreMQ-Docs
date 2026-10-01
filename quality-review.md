@@ -1,44 +1,29 @@
-# Documentation quality review
+# Documentation review status
 
-Review date: September 30, 2026. Baseline: CoreMQ-Docs `d1bebe7`; implementation: Broker `e5b5eb1`. Scale: 1 unusable, 5 partial/development guidance, 8 usable task guidance with explicit limits and validation, 10 complete independently qualified guidance. Equal weighting across the 11 factors. High scores are not awarded to unsupported product claims.
+Review date: September 30, 2026. This review separates the guide content, the experience of the published documentation site and product qualification.
 
-## Before changes
+## Published reader experience
 
-| Factor | Score | Concrete evidence |
-| --- | --- | --- |
-| Readability | 7 | Clear modern provider/bridge prose, but roles/policies repeat numbered headings and generic conclusions |
-| Understandability | 6 | Identities distinguish account types; policy precedence lacks worked outcomes and storage boundaries are missing |
-| Accuracy/currentness | 5 | System events incorrectly says no UI toggle; policies says Users tab; AWS source guide still says EKS never ran |
-| Discoverability/navigation | 5 | Root index lists guides, without a start-to-operate task path or recovery links |
-| Task/use-case coverage | 4 | Azure install exists; local/Docker, AWS/GCP prerequisites, recovery and retirement absent |
-| CLI guidance/examples | 6 | Hidden prompt/input/revision notes good, but command coverage and operational examples incomplete |
-| UI guidance | 6 | Configure labels useful; no screenshots or qualified local/remote task walkthrough |
-| Screenshots/diagrams | 1 | No current product screenshots or architecture diagrams |
-| Troubleshooting | 3 | Scattered caveats; no symptom-to-check/verification runbook |
-| Accessibility | 5 | Mostly text, but uneven heading structure and no visual alternatives or rendered review |
-| Production operations | 2 | No consistent backup/restore, sizing, rollback or uninstall runbook |
+**User-rated baseline: 4/10.** The published reader has a flat filename-based menu, limited visual hierarchy, no theme selector and no page-specific contribution flow. The earlier 8.0 score described guide content and scoped local previews. It overstated the experience of the live website and is withdrawn as an overall website rating.
 
-**Baseline overall: 4.5/10 (50/11).** Product/source evidence weaknesses cap accuracy and operational confidence.
+The next reader revision adds grouped and nested collapsible navigation, page filtering, a page outline, previous/next links, responsive cards, product branding, light/dark themes and GitHub feedback drafts tied to the actual page and published source. A source commit or passing build does not establish that these features are deployed. **A revised live UX score remains pending hosted verification.**
 
-## After changes
+## Review criteria
 
-These scores assess the revised guides and scoped local rendering/behavior checks. DEV publication is independently verified from the immutable source; a saved editing ref is not publication. Product qualification remains separate.
+| Area | Acceptance evidence required |
+| --- | --- |
+| Navigation | Every published page reachable once in the selected version; meaningful groups, nested pages, working collapse and filtering |
+| Presentation | Clear headings, readable spacing, useful task cards and restrained iconography; diagrams fit their container |
+| Branding and themes | Approved product marks; transparent Ink C on light surfaces, White C on dark; persistent Light/Dark/System preference |
+| Page orientation | Page title, version context, outline and working previous/next links |
+| Accessibility | Keyboard navigation, visible focus, skip link, semantic disclosures, image alternatives and legible contrast in both themes |
+| Responsive behavior | Actual narrow-viewport checks; no page overflow; usable navigation, tables and code samples |
+| Examples | Accurate request schemas, visible language labels and verified copy behavior |
+| Feedback | Valid public GitHub repository and actual source path; draft contains page/version/commit; no automatic submission |
+| Content quality | Task instructions, clear limitations, troubleshooting and recovery guidance supported by scoped evidence |
+| Performance and cost | Reuse existing infrastructure, bounded assets, no added standing capacity or third-party tracking |
 
-| Factor | Before | After | Evidence and remaining limit |
-| --- | --- | --- | --- |
-| Readability | 7 | 8 | Task headings, concise steps and consistent tables; long CLI reference remains searchable |
-| Understandability | 6 | 8 | Architecture channels, edition/storage boundaries and worked authorization outcomes |
-| Accuracy/currentness | 5 | 8 | Exact source baseline, corrected UI/dependency/policy claims and historical/current evidence separated; installed package still needs verification |
-| Discoverability/navigation | 5 | 8 | Start/deploy/access/operate index and cross-links; preview title filter and hosted version navigation |
-| Task/use-case coverage | 4 | 8 | Local/container plus Azure/AWS/GCP/private prerequisites and operate/retire path; non-Azure commercial acceptance still held |
-| CLI guidance/examples | 6 | 8 | Command inventory, schemas, native/module distinction, revision and exit behavior; 49 scoped executable checks |
-| UI guidance | 6 | 8 | Actual labels, seven synthetic captures, provider/bridge steps, System events save/read-back; external tenants/remote writes unqualified |
-| Screenshots/diagrams | 1 | 8 | Seven current screens with provenance/alt text and architecture PNG with alternate text and retained described SVG source |
-| Troubleshooting | 3 | 8 | Symptom/check/verification table, cookie isolation, diagnostics and support handoff |
-| Accessibility | 5 | 8 | One H1 per page, labeled code/alt text, high-contrast responsive preview reviewed at desktop/390px; no full assistive-technology audit |
-| Production operations | 2 | 8 | Backup consistency, recovery drill, monitored rollout/abort, retention and sizing/cost criteria; no promised RPO/RTO or capacity certification |
-
-**After overall: 8.0/10 (88/11), up from 4.5/10.** Eight means usable, scoped task guidance under this rubric; it does not mean every described product/provider path passed production acceptance.
+The 11-factor historical content review and its before/after scores remain in the version history and task evidence. They are not a substitute for the reader checks above, customer usability research, a full accessibility audit or product acceptance.
 
 ## Validation evidence
 
