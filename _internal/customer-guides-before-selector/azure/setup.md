@@ -1,8 +1,8 @@
 # Deploy CoreMQ on Azure Kubernetes Service
 
-The [public CoreMQ Azure Marketplace offer](https://marketplace.microsoft.com/en-us/product/container/core-var.coremq-kubernetes?tab=Overview) installs a Kubernetes application into **your existing AKS cluster**. It is not the retired Express virtual-machine offer. You operate the cluster, data services, networking, DNS, and certificates. Review the current plan price in Marketplace before creating the deployment. Include broker replica-hours alongside cluster, data-service and network costs.
+The [public CoreMQ Azure Marketplace offer](https://marketplace.microsoft.com/en-us/product/container/core-var.coremq-kubernetes?tab=Overview) installs a Kubernetes application into **your existing AKS cluster**. It is not the retired Express virtual-machine offer. You operate the cluster, data services, networking, DNS, and certificates. The documented plan price at the earlier offer review was USD $0.19 per running broker pod-hour ($0.38/hour for its two default replicas), before infrastructure and data services. This review did not reverify the live purchase price. Check the plan price shown in Marketplace before creating the deployment.
 
-> **Check network exposure before installing.** The CoreMQ 0.1.6 Marketplace package in CoreVar's release registry defaults to a Kubernetes `LoadBalancer` Service with the management interface on HTTP port 8080 and plaintext MQTT on port 1883. MQTTS on port 8883 is disabled by default. Selecting **Enable MQTTS** adds TLS access but does not remove the other two ports or make the load balancer private. Do not install this package into a cluster where that Service could receive an Internet-reachable address until the package is corrected or you have verified controls that prevent public exposure from the moment it is created.
+> **Check network exposure before installing.** The CoreMQ 0.1.6 Marketplace package in CoreVar's release registry defaults to a Kubernetes `LoadBalancer` Service with the management interface on HTTP port 8080 and plaintext MQTT on port 1883. MQTTS on port 8883 is disabled by default. Selecting **Enable MQTTS** adds TLS access but does not remove the other two ports or make the load balancer private. Do not install this package into a cluster where that Service could receive an Internet-reachable address until the package is corrected or you have verified controls that prevent public exposure from the moment it is created. An AKS deployment has not been used to verify the live Service address for this guide.
 
 ## Before you deploy
 
@@ -57,6 +57,10 @@ The subscriber should print `hello from CoreMQ`. If it does not, check pod readi
 
 The [CoreMQ configuration guides](../README.md) cover later endpoint, identity, and policy changes. Features in those development guides may require a newer broker build than the currently installed Marketplace package.
 
-## Certificate setup and renewal
+## Link and version verification
 
-Use the certificate fields exposed by your deployment package. If the form includes a protected PFX-password field, provide the password there. For packages that bootstrap a certificate into persistent writable state, an existing runtime certificate is preserved: updating the bootstrap Secret alone is not renewal. Follow the installed package's upload or external-operator workflow and verify a fresh TLS handshake on every replica. See [endpoint certificate renewal](../endpoints.md).
+### Certificate setup and renewal depend on the package
+
+Use only the certificate fields supported by the deployment form you actually see. Newer DEV source includes an optional protected PFX-password field and a one-time bootstrap into persistent writable certificate state; that change has not been qualified as a live Marketplace AKS installation. Do not assume the published 0.1.6 form or package has those features. In a bootstrap-based package, an existing runtime certificate is preserved, so editing the bootstrap Secret alone is not renewal. Follow the installed release's supported upload or external-operator workflow and verify a fresh TLS handshake on every replica. See [endpoint certificate renewal](../endpoints.md) and [release status](../release-status.md).
+
+The September 30 automated offer-page request returned HTTP 403; the Azure portal entry point returned 200, which does not verify offer availability, your subscription entitlement or its current price. Confirm those in the Azure UI before purchasing. These instructions preserve the previously observed 0.1.6 form/network boundary; they do not claim a newly deployed AKS acceptance or a corrected public package.

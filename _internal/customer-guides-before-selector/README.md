@@ -25,14 +25,14 @@ Monitor your broker, diagnose a problem and collect useful support evidence.
 
 :::doc-callout
 ### Know your release
-Select the documentation version that matches **Configure > About**. Use the [versions and packages guide](release-status.md) when choosing an installation or upgrade package.
+These guides describe the reviewed development implementation. Record your broker version under **Configure > About** and check [release status](release-status.md) before relying on a feature. Installed Marketplace packages and remote controls have their own qualification limits.
 :::
 
 ## Deploy and connect
 
 - [Azure Marketplace setup](azure/setup.md): installation and network prerequisites.
 - [Endpoints and certificates](endpoints.md): listener security and connection settings.
-- [Sizing and availability](sizing.md): workload measurements and capacity planning.
+- [Sizing and availability](sizing.md): measured evidence and current capacity limits.
 - [CLI reference](cli.md): sign-in, request schemas and command examples.
 
 ## Configure messaging and access
@@ -70,4 +70,4 @@ Select the documentation version that matches **Configure > About**. Use the [ve
 
 The CLI uses the HTTP(S) management origin. Redis is the cloud backplane; bridges forward selected messages. CoreControl carries authorized remote commands. These paths have different credentials and permissions.
 
-For package and version selection, see [versions and packages](release-status.md).
+For current evidence and remaining limitations, see [release status](release-status.md) and the [documentation review](quality-review.md).

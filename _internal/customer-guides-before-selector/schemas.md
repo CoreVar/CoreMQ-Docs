@@ -15,6 +15,6 @@ Use the schema from your installed CLI for the exact policy shape, discriminator
 
 Check invalid JSON, missing required fields, oversized payloads and wildcard boundaries. Confirm the intended rejection result at the publishing client's QoS and inspect metrics. Schema validation adds CPU and latency; include it in [sizing tests](sizing.md). Keep policy revisions and test payloads with your deployment record, using synthetic data.
 
-Remove only the selected policy using its current expected revision. A conflict requires rereading and reviewing the competing change. Remote editor availability depends on broker capabilities and portal packages; [remote management](remote-management.md) explains package compatibility and capability-based controls.
+Remove only the selected policy using its current expected revision. A conflict requires rereading and reviewing the competing change. Remote editor availability depends on broker capabilities and portal packages; [coverage](remote-management.md) distinguishes implemented contracts from live qualification.
 
 Operational notifications use their own versioned [system event schema](system-events.md); they are best-effort observations, not a durable schema-validation audit.

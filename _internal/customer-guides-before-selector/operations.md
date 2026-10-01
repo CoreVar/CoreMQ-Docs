@@ -1,6 +1,6 @@
 # Operate and diagnose CoreMQ
 
-Keep a deployment record with the broker/CLI/portal versions, immutable image digests, chart version, architecture, endpoint names, dependency versions, storage owners, certificate expiry, backup location and restore-test date. Store secret references separately from credentials. Check [versions and packages](release-status.md) before adopting a new feature.
+Keep a deployment record with the broker/CLI/portal versions, immutable image digests, chart version, architecture, endpoint names, dependency versions, storage owners, certificate expiry, backup location and restore-test date. Store secret references separately from credentials. Check [release status](release-status.md) before adopting a new feature.
 
 ## Daily checks
 

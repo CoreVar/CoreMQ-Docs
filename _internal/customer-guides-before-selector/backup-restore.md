@@ -13,7 +13,7 @@ Define an acceptable recovery point (RPO: how much data may be lost) and recover
 | CoreControl credential | Encrypted file on state volume, separate protection key | Protect both independently; server revocation is authoritative and an old artifact cannot be reused |
 | Browser session protection material | Build/deployment-specific data-protection key storage | Preserve approved key store when continuity is intended; allow forced reauthentication after recovery |
 
-Use the backup tools for your configured PostgreSQL, SQL Server or document store. The local edition uses SQLite. Restore to the same provider before considering a separate migration; changing a provider is not a recovery shortcut.
+The reviewed cloud relational implementation explicitly supports PostgreSQL, SQL Server and SQLite code paths; this is not arbitrary SQL support. Local edition permits SQLite only. Marketplace/EKS acceptance cited here uses PostgreSQL and Redis. Document-store implementations are separate candidates and need provider-specific qualification; do not switch providers as a recovery shortcut.
 
 ## Create a backup
 
@@ -31,8 +31,8 @@ Restore into an isolated target with outgoing bridges and CoreControl disabled i
 
 1. Restore the database, Redis state, files and required keys using the approved version's tooling and permissions. Use the recorded image first; avoid applying new migrations during the recovery exercise.
 2. Start one controlled broker. Check migrations, liveness/readiness, configuration, local recovery login, identities, roles/policies and certificate validity.
-3. Test retained-message retrieval, persistent-session reconnect/replay and inflight QoS behavior using the original session settings and dedicated test client IDs. Measure losses, duplicates and order against the declared requirements.
+3. Test retained-message retrieval, persistent-session reconnect/replay and inflight QoS behavior using the original session settings and synthetic client IDs. Measure losses, duplicates and order against the declared requirements.
 4. Add the remaining intended replicas, test replacement/failover, then enable bridges with duplicate-safe downstream consumers. Reconcile remote command state before reconnecting CoreControl; obtain fresh enrollment if restored credentials are no longer valid.
 5. Record observed RPO/RTO, exact versions and failures. Teardown only the drill's owned resources and verify their absence. Keep backup evidence per retention policy.
 
-Use [capacity planning](sizing.md) to verify your recovery topology. Preserve shared storage during a failed drill.
+Current production HA/recovery remains unqualified beyond scoped acceptance; see [sizing constraints](sizing.md) and [release evidence](release-status.md). Never delete shared storage as part of a failed drill.

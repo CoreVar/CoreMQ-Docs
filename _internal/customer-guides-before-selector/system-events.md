@@ -73,7 +73,7 @@ MQTT's 65,535-byte limit is dropped and counted. There is no durable event journ
 offline replay guarantee, or total ordering across nodes. Consumers should use
 `eventId` for deduplication and query current state when reconciling status.
 
-Open **Configure > System events**, or use the persistent CLI/API settings:
+The reviewed source includes **Configure > System events** and persistent CLI/API settings:
 
 ```text
 coremq system-events show
@@ -81,7 +81,7 @@ coremq system-events put --schema
 coremq system-events put --file settings.json
 ```
 
-Use `{ "enabled": false, "expectedRevision": 7 }` with the actual revision from the read; an initial unsaved setting has null revision. Read back after saving and reject stale revisions. Peer instances refresh shared settings every two seconds. `SystemEvents:Enabled` (environment `SystemEvents__Enabled`) is the startup fallback; saved settings take precedence. Disabling emission retains reserved-topic protection.
+Use `{ "enabled": false, "expectedRevision": 7 }` with the actual revision from the read; an initial unsaved setting has null revision. Read back after saving and reject stale revisions. Peer instances refresh shared settings every two seconds. `SystemEvents:Enabled` (environment `SystemEvents__Enabled`) is the startup fallback; saved settings take precedence. Disabling emission retains reserved-topic protection. September 30 isolated local UI/CLI checks verified save/read-back, a stale null revision rejected with HTTP 409, CLI update to revision 2 and UI reload; configuration availability still depends on the exact release/portal package. See [release status](release-status.md) and [coverage](remote-management.md).
 
 Message publish/delivery events are deliberately absent to avoid recursive
 monitoring traffic. Authentication failures, certificate expiry, policy changes,
@@ -94,4 +94,4 @@ stream. They must not be inferred from the lifecycle events above.
 
 Focused tests cover topic encoding, wildcard matching and authorization. A local Docker test verified connection/disconnection notifications, escaped client identifiers and blocked forged publications. Bridge lifecycle and multi-node event delivery have not yet been verified end to end.
 
-See [MQTT 5 topic rules](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html) and [remote management](remote-management.md).
+See [MQTT 5 topic rules](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html) and [management coverage](remote-management.md).

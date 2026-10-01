@@ -1,19 +1,17 @@
-# MQTT 5 support
+# MQTT 5 client integration
 
-The reviewed broker source pins the MQTTnet fork `5.2.0-local.will.5e8d78b4`, with additional broker policy, routing and persistence handling. The earlier `5.2.0.1603` description does not identify this dependency. Record the installed dependency and immutable broker artifact when comparing results. Do not interpret a dependency version as complete MQTT 5 conformance or formal certification.
+CoreMQ accepts MQTT 5 clients for connections, persistent sessions, QoS 0/1/2 messaging, retained messages and subscription configuration. Select an MQTT 5-capable client and test its settings against your broker and listener.
 
-A recent development TCP conformance run completed 50 cases: **41 passed, 0 failed, 6 unsupported, 3 not run**. The unrun cases concerned WebSocket/TLS/mTLS in that particular run; other transport checks do not make this run complete.
+## Connect and resume a session
 
-Verified areas include MQTT 5 connection negotiation, session resume, ordinary QoS 0/1/2 exchange, retained message operations, and several MQTT 5 properties and subscription options. Crash durability, cross-node behavior and configured limits have additional qualification requirements.
+Choose a stable client ID when using persistent sessions. Configure Clean Start and Session Expiry on CONNECT, then verify reconnect and offline replay with the same client ID. Use [endpoints](endpoints.md) to configure TLS and authentication.
 
-## Known protocol-engine gaps
+## Publish and subscribe
 
-- Client Receive Maximum enforcement.
-- Updating Session Expiry from DISCONNECT.
-- Rejecting zero or repeated Subscription Identifier properties.
-- Rejecting repeated singleton PUBLISH properties.
-- Rejecting an invalid Will Topic in the audited case.
+Choose QoS and retained-message behavior deliberately. Configure bounded client-side in-flight limits rather than relying on server-enforced Receive Maximum. Send each singleton MQTT property once, use nonzero Subscription Identifiers, and provide a valid Will Topic. These choices keep client packets interoperable and your queues bounded.
 
-Post-connect AUTH reauthentication and the requested Will-on-DISCONNECT lifecycle also remain incomplete. Outbound topic aliases and server redirects are not implemented; those are optional features rather than proof by themselves of protocol nonconformance.
+Use full topic names when publishing; outbound topic aliases and server redirects are not part of this broker's client workflow. Configure session lifetime on CONNECT and reconnect to change authentication or session settings. Do not depend on post-connect AUTH reauthentication or a Will-on-DISCONNECT extension.
 
-Proposed upstream fixes are not a released, qualified broker dependency. A newer broker release must repeat the relevant wire tests before removing these limitations from its documentation.
+## Plan delivery behavior
+
+Exercise reconnect, retained retrieval and offline-session replay using your application's actual QoS and payloads. Design consumers to handle duplicate delivery and measure ordering for the sessions and topology you use. See [capacity and availability](sizing.md), [backup and restore](backup-restore.md), and [bridges](bridges.md) for dependency and recovery planning.

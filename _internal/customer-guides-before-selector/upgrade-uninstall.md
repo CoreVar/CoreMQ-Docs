@@ -1,12 +1,12 @@
 # Upgrade, roll back and uninstall
 
-Only upgrade to an approved release for your provider/edition/architecture. Record the current digest/chart/CLI/portal versions, backup and restore-test evidence, dependency versions, accepted feature limits and maintenance owner. [Versions and packages](release-status.md) explains which artifacts to keep together.
+Only upgrade to an approved release for your provider/edition/architecture. Record the current digest/chart/CLI/portal versions, backup and restore-test evidence, dependency versions, accepted feature limits and maintenance owner. [Release status](release-status.md) separates passed builds from live qualification.
 
 ## Upgrade
 
 1. Read the exact release's notes, schema/migration requirements and feature flags. Preserve current values, Secret references, state volumes, certificates and CoreControl protection key. Download and verify immutable artifacts before the maintenance window.
 2. Test the change in DEV/TEST with representative sessions, retained messages, replay, policies, TLS and bridges. Confirm compatible portal/CLI packages and capability versions. Define abort conditions.
-3. Take a consistent backup and prevent conflicting configuration writers. Roll one controlled instance or use the release's rollout procedure; do not assume concurrent startup/migrations are safe on every provider.
+3. Take a consistent backup and prevent conflicting configuration writers. Roll one controlled instance or use the release's qualified rollout procedure; do not assume concurrent startup/migrations are safe on every provider.
 4. For Helm deployments, render the exact approved chart with reviewed private values, then use `helm upgrade ... --wait --timeout ...`. Read the running image IDs and replica readiness after rollout. Helm success alone does not prove messaging or retained state.
 5. Test allowed and denied client actions, persistent-session replay, certificate-verified connections, bridge delivery, schema/system-event behavior, and CoreControl catalog/health freshness. Track latency/errors/backlog against predeclared thresholds. Retain the old image and recoverable state until the observation window ends.
 

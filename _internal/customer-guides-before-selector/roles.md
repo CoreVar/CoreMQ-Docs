@@ -32,11 +32,15 @@ coremq users roles list <user-id>
 { "add": ["Telemetry client"], "remove": [] }
 ```
 
+Candidate 2177's role-policy **Edit** opens the corrected modal; local browser CRUD and direct/native edits passed with fresh API/browser read-back. Use the matching approved artifacts and follow the [scoped policy-edit procedure](policies.md#edit-an-existing-role-or-user-policy). Candidate 2133's unregistered-route failure remains historical; remote/restart qualification remains separate.
+
 An allow from one role wins over a deny from another. Test combined roles before granting them. Removing administrative roles preserves other roles; verify effective access after the change.
 
 ## Renaming a local role
 
 Refresh the role before changing its name and read it back after saving. The current native role-name update has no revision precondition, so avoid concurrent renames. Revision checks on role policies and other supported resources do not protect the role-name update itself.
+
+Candidate 2229 verified create, read and rename on an owned empty role, plus negative request contracts. That scope does not qualify privilege grants or remote-management parity. See [release status](release-status.md).
 
 ## Organization application roles
 

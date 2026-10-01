@@ -6,7 +6,7 @@ Open **Configure > Identities** to see local accounts, certificate identities an
 
 Choose **Create User**, enter the account information and password, and assign the required roles. Grant **User Manager** or **Endpoint Manager** only when the account needs management access. MQTT publishing and subscribing are controlled by message policies; management privileges and message permissions serve different purposes.
 
-Edit the account to manage its basic information, credentials and roles, and to view its policy collection. Follow the [policy-edit procedure](policies.md#edit-an-existing-role-or-user-policy) and read back policy changes. The technical details identify the stable local user ID. Organization sign-in identities are independent and are not attached to a local account.
+Edit the account to manage its basic information, credentials and roles, and to view its policy collection. Candidate 2177's corrected policy modal and direct/native get/update passed against a disabled synthetic user, with API/browser read-back and cleanup. Follow the [scoped policy-edit procedure](policies.md#edit-an-existing-role-or-user-policy). Candidate 2133's missing route remains historical; these checks do not qualify remote edits, enabled-identity behavior or restart persistence. The technical details identify the stable local user ID. Organization sign-in identities are independent and are not attached to a local account.
 
 ## Organization identities
 
@@ -25,6 +25,8 @@ Authentication support depends on the listener configuration and build; CoreMQ i
 See [roles](roles.md), [policies](policies.md), and [endpoints](endpoints.md).
 
 ## Certificate authority and identity checks
+
+**Candidate 2177 known issue:** local browser metadata-only CA editing without a new PEM failed and left revision 1 unchanged. Public PEM upload/create and an explicit public PEM replacement with a name edit passed against a disabled synthetic authority; deletion and API 404 absence were confirmed. Keep metadata-only editing held until the fix is present in a qualified artifact. These checks do not qualify active listener trust, certificate authentication, restart persistence or remote authority changes.
 
 Upload public CA certificates under **Certificate authorities**, then configure the listener's intended trust/authentication settings. A trusted chain alone does not assign a device role. Create the certificate identity/backing account, map the supported certificate identity field and client-ID rules, and assign only its message role. Test an authorized certificate, an untrusted certificate, a revoked/disabled identity and an unrelated client ID.
 

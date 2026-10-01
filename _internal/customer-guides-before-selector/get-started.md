@@ -1,6 +1,6 @@
 # Install CoreMQ and send your first message
 
-Use this path for an isolated evaluation. For cloud installations, start with [deployment choices](deployment.md); the Marketplace packages have different prerequisites and package settings. Record the broker version and edition from **Configure > About**. Obtain the broker and CLI from the same approved release; these docs do not provide a public download for an unreleased candidate.
+Use this path for an isolated evaluation. For cloud installations, start with [deployment choices](deployment.md); the Marketplace packages have different prerequisites and release status. Record the broker version and edition from **Configure > About**. Obtain the broker and CLI from the same approved release; these docs do not provide a public download for an unreleased candidate.
 
 > [!NOTE]
 > This walkthrough uses a disposable local broker. Complete the deployment and security checks before using an installation for active workloads.
@@ -15,7 +15,7 @@ From the extracted broker directory:
 ./coremq-broker --data-dir ./coremq-evaluation --http-port 18080 --mqtt-port 11883
 ```
 
-Open `http://localhost:18080`. A new local database initializes username `admin` and password `coremq-local` on a new database. These are public development defaults. **Local mode binds HTTP and MQTT to all interfaces**, despite printing localhost addresses. Use an isolated workstation/network, or Docker's loopback-only port mappings below. Do not expose this startup to the Internet. Change the administrator password under **Configure > Identities** before allowing any other machine to reach it. Changing the startup defaults does not rotate an existing account.
+Open `http://localhost:18080`. The reviewed local build initializes username `admin` and password `coremq-local` on a new database. These are public development defaults. **Local mode binds HTTP and MQTT to all interfaces**, despite printing localhost addresses. Use an isolated workstation/network, or Docker's loopback-only port mappings below. Do not expose this startup to the Internet. Change the administrator password under **Configure > Identities** before allowing any other machine to reach it. Changing the startup defaults does not rotate an existing account.
 
 The local build uses SQLite and standalone message/session stores. It does not include the CoreControl connector. A local data directory preserves configuration; do not assume it provides the cloud Redis session durability. Stop the process cleanly before copying its SQLite database. See [backup and restore](backup-restore.md).
 

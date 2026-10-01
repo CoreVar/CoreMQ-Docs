@@ -1,0 +1,40 @@
+<div data-docs-diagram-root data-docs-module="./deployment-choice.js" data-docs-style="./deployment-choice.css" data-docs-immersive>
+  <div class="deployment-chooser">
+    <section data-docs-scene="cloud">
+      <p class="eyebrow">Your deployment, your infrastructure</p>
+      <h2>1. Choose where CoreMQ runs</h2>
+      <p class="diagram-description">Pick a cloud to focus the guide, or keep every path visible.</p>
+      <div class="cloud-options" role="group" aria-label="Deployment platform">
+        <button type="button" data-cloud="" aria-pressed="true"><span class="choice-symbol">∞</span><strong>All platforms</strong><span>Explore every path</span></button>
+        <button type="button" data-cloud="azure" aria-pressed="false"><span class="choice-symbol">A</span><strong>Azure</strong><span>AKS · your subscription</span></button>
+        <button type="button" data-cloud="aws" aria-pressed="false"><span class="choice-symbol">W</span><strong>AWS</strong><span>EKS · your account</span></button>
+        <button type="button" data-cloud="gcp" aria-pressed="false"><span class="choice-symbol">G</span><strong>Google Cloud</strong><span>GKE · your project</span></button>
+        <button type="button" data-cloud="kubernetes" aria-pressed="false"><span class="choice-symbol">K</span><strong>Kubernetes</strong><span>Your cluster</span></button>
+        <button type="button" data-cloud="local" aria-pressed="false"><span class="choice-symbol">⌘</span><strong>Local / Docker</strong><span>One broker · SQLite</span></button>
+      </div>
+      <button type="button" data-docs-next>Choose a database →</button>
+    </section>
+    <section data-docs-scene="database">
+      <p class="eyebrow">Connect your backing store</p>
+      <h2>2. Choose your database</h2>
+      <svg class="deployment-path" viewBox="0 0 420 92" role="img" aria-label="Your platform connects to CoreMQ and your database">
+        <path class="connection" d="M74 46H346" />
+        <rect x="8" y="18" width="128" height="56" rx="12" /><rect x="152" y="18" width="116" height="56" rx="12" /><rect x="284" y="18" width="128" height="56" rx="12" />
+        <text x="72" y="51" data-cloud-label>All platforms</text><text x="210" y="51">CoreMQ</text><text x="348" y="51" data-database-label>All databases</text>
+        <circle class="path-marker" cx="142" cy="46" r="4" />
+      </svg>
+      <div class="database-options" role="group" aria-label="Backing database">
+        <button type="button" data-database="" aria-pressed="true">All databases</button>
+        <button type="button" data-database="postgresql" aria-pressed="false">PostgreSQL</button>
+        <button type="button" data-database="sqlserver" aria-pressed="false">SQL Server</button>
+        <button type="button" data-database="cosmos" aria-pressed="false">Azure Cosmos DB</button>
+        <button type="button" data-database="dynamodb" aria-pressed="false">DynamoDB</button>
+        <button type="button" data-database="firestore" aria-pressed="false">Firestore</button>
+        <button type="button" data-database="sqlite" aria-pressed="false">SQLite</button>
+      </div>
+      <p class="selection-summary" role="status" aria-live="polite">All deployment documentation is shown.</p>
+      <p class="diagram-description">Use the database options exposed by your installed package. The Azure Marketplace form uses PostgreSQL; custom charts expose additional backing stores.</p>
+      <div class="diagram-controls"><button type="button" data-docs-back>← Platform</button><button type="button" data-open-guide>Read my guide ↓</button><button type="button" data-reset>Show everything</button></div>
+    </section>
+  </div>
+</div>

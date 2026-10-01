@@ -25,9 +25,9 @@ The development implementation adds **Kafka**, **EventHubs**, and **CoreStream**
 - Use CoreStream's Kafka listener. Actual CoreStream and Azure Event Hubs service acceptance remains outstanding.
 - Reverse consumption, SCRAM selection, OAuth credential refresh, Kafka client-certificate authentication, arbitrary payload transformations and schema-registry serialization are not implemented.
 
-Messages leave the durable bridge queue after acknowledged production. Uncertain acknowledgements, restarts and lease changes can cause duplicates. Queue saturation can skip forwarding. Producer idempotence is not an end-to-end exactly-once guarantee.
+Messages leave the durable bridge queue after acknowledged production. Uncertain acknowledgements, restarts and lease changes can cause duplicates. Queue saturation can skip forwarding. Producer idempotence is not an end-to-end exactly-once guarantee. A disposable Kafka producer/consumer test passed; cluster lease/failover qualification remains outstanding.
 
-For a new destination, confirm its pre-created topic, listener/TLS and credential scope, save a bounded route, then inspect bridge status and destination consumption with a unique test payload. Verify direction, topic/key, bytes and headers; exercise destination failure/recovery and check backlog, skipped forwarding and duplicates before enabling customer traffic. A connected status alone does not prove delivery.
+For a new destination, confirm its pre-created topic, listener/TLS and credential scope, save a bounded route, then inspect bridge status and destination consumption with a unique synthetic payload. Verify direction, topic/key, bytes and headers; exercise destination failure/recovery and check backlog, skipped forwarding and duplicates before enabling customer traffic. A connected status alone does not prove delivery.
 
 ## Management
 
@@ -48,3 +48,5 @@ To export system events, explicitly match their `$SYS/coremq/v1` filter. Incomin
 The file picker supports uploading, selecting and refreshing stored files. Managed files are stored encrypted and are append-only: the current management API and UI do not offer per-file editing, deletion or unused-file cleanup.
 
 Clearing a bridge's file reference or deleting the bridge does **not** delete the uploaded file. Review file ownership and retention before uploading, and do not treat reference removal as credential erasure. A disposable test volume can be removed by its owner after testing; that is separate from supported cleanup of an individual file on a running broker.
+
+Candidate 2229 verified public-CA upload and reference changes on disabled synthetic bridges, including revision checks and reference clearing. It did not qualify private credential replacement, actual bridge traffic, provider authentication or remote management parity. See [release status](release-status.md).

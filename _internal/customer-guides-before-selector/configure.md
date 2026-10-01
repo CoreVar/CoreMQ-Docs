@@ -19,7 +19,7 @@ Certificate identity connection status is available with identity management. Th
 
 Use **Bridges** to list existing connections to other brokers or stream destinations, then **Create bridge** to open the editor. Browser certificate and secret inputs use managed file uploads where offered, not paths on the browser user's computer.
 
-Updates may require reconnecting clients or restarting the broker; observe the confirmation and pending-state information for that operation. The browser and management portals can differ when their package versions differ. See [remote management](remote-management.md).
+Updates may require reconnecting clients or restarting the broker; observe the confirmation and pending-state information for that operation. The browser and management portals can differ when their package versions differ. See [management coverage](remote-management.md).
 
 ![CoreMQ Configure with Identities selected, search and account-type columns, alongside roles, authorities, schemas, endpoints, system events and providers.](assets/configure-identities.jpg){width=800 style="max-width:100%;height:auto"}
 
