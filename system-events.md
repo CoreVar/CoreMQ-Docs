@@ -90,8 +90,6 @@ stream. They must not be inferred from the lifecycle events above.
 
 ![System events editor with persistent emission enabled and Save/Reload controls](assets/configure-system-events.jpg){width=800 style="max-width:100%;height:auto"}
 
-Synthetic local screenshot after CLI update and UI reload on September 30. The HTTP fixture does not qualify cloud or portal writes.
-
 ## Validation status
 
 Focused tests cover topic encoding, wildcard matching and authorization. A local Docker test verified connection/disconnection notifications, escaped client identifiers and blocked forged publications. Bridge lifecycle and multi-node event delivery have not yet been verified end to end.
