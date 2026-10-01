@@ -1,6 +1,6 @@
 # Install CoreMQ and send your first message
 
-Use this path for an isolated evaluation. For cloud installations, start with [deployment choices](deployment.md); the Marketplace packages have different prerequisites and package settings. Record the broker version and edition from **Configure > About**. Obtain the broker and CLI from the same approved release; these docs do not provide a public download for an unreleased candidate.
+Use this path for an isolated evaluation. For cloud installations, start with [deployment choices](deployment.md); the Marketplace packages have different prerequisites and package settings. Record the broker version and edition from **Configure > About**. Obtain the broker and CLI from the same approved release; obtain the installation package from CoreVar for your selected edition.
 
 > [!NOTE]
 > This walkthrough uses a disposable local broker. Complete the deployment and security checks before using an installation for active workloads.

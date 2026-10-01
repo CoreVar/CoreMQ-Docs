@@ -36,7 +36,7 @@ Set alerts for readiness loss, connection churn, publish/delivery errors, queue 
 | Bridge connected but no forwarding | Explicit direction/filter, destination topic exists, Secret reference, queue/retry/rate/hop limits | Destination consumer sees a uniquely identified message; inspect duplicate handling |
 | Certificate refresh fails | Deployment uses mounted material or disallows API upload; supplied PFX/hostname/trust | Apply through the supported deployment channel and verify a new TLS handshake |
 
-Do not repeatedly restart a dependency outage into apparent recovery. Preserve failure timestamps and the exact candidate, inspect queue and durable state, then run the recovery checks appropriate to your configuration.
+Do not repeatedly restart a dependency outage into apparent recovery. Preserve failure timestamps and the exact broker version, inspect queue and durable state, then run the recovery checks appropriate to your configuration.
 
 ## Safe diagnostics and support handoff
 
@@ -46,6 +46,6 @@ coremq diagnostics run --timeout 10 --report coremq-diagnostics.json
 
 The timeout applies to each check. The report excludes response bodies, tokens, passwords and payloads, but includes the target origin and timestamps. Inspect it for private hostnames before sharing. Denied API checks can indicate insufficient role access rather than an outage. Broker logs remain in the existing deployment logging system; the CLI does not retrieve them.
 
-Send support the exact versions/digests, platform, environment, symptom and UTC time range, expected versus observed result, safe diagnostics, relevant redacted logs and operation IDs. Include reproduction using synthetic data and indicate whether the problem occurs locally or through CoreControl. Never send saved CLI tokens, bootstrap artifacts, connection strings, private keys, PFX files, raw message payloads or full Kubernetes Secret/Helm output. Use your contracted support channel; [feedback](feedback.md) is a consent-based report, not an incident SLA.
+Send support the exact versions/digests, platform, environment, symptom and UTC time range, expected versus observed result, safe diagnostics, relevant redacted logs and operation IDs. Include reproduction using sample data and indicate whether the problem occurs locally or through CoreControl. Never send saved CLI tokens, bootstrap artifacts, connection strings, private keys, PFX files, raw message payloads or full Kubernetes Secret/Helm output. Use your contracted support channel; [feedback](feedback.md) is a consent-based report, not an incident SLA.
 
 For data recovery use [backup and restore](backup-restore.md). For a version failure use [upgrade and rollback](upgrade-uninstall.md).

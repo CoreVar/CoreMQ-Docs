@@ -26,7 +26,7 @@ Choose **Add provider** to configure an existing OIDC registration. Register the
 
 Choose **Provider token roles**, specify the signed ID-token claim containing application roles (default `roles`), and map its exact values to CoreMQ permissions. The identity provider must issue that claim to this application. Providers that do not supply suitable application-role claims require an appropriate federation or claim configuration; an organization email address alone grants no access. Changes to token-based assignments apply at the next sign-in or session expiration. CoreID uses its dedicated current-access endpoint instead.
 
-CoreMQ supports authorization code with S256 PKCE, state/nonce, signature, issuer, audience and lifetime validation. Access and refresh tokens are not stored. Sessions are nonpersistent, do not slide, and expire no later than the signed ID token or configured 5â€“480-minute limit. Provider configuration changes invalidate existing external sessions after restart.
+CoreMQ supports authorization code with S256 PKCE, state/nonce, signature, issuer, audience and lifetime validation. Access and refresh tokens are not stored. Sessions are nonpersistent, do not slide, and expire no later than the signed ID token or configured 5Ã¢â‚¬â€œ480-minute limit. Provider configuration changes invalidate existing external sessions after restart.
 
 Supported integration uses OIDC; OAuth alone, AWS IAM credentials and SAML-only providers are not browser sign-in protocols for this feature. Provider-specific client registration and claim configuration must be tested in the intended tenant.
 
@@ -76,7 +76,7 @@ Choose a **Provider preset**, then confirm every generated value against the reg
 | CoreID | Prefer Connect CoreID for guided registration; verify the organization/application assignments and current-access revocation described above |
 | Microsoft Entra ID | Register the exact HTTPS web callback, select the intended tenant and emit application-role values in the signed ID token; verify an unauthorized tenant is rejected |
 | Auth0 | Create an OIDC web application and allow the exact callback; arrange a signed ID-token role claim, configure its exact claim name and map its values |
-| Google Workspace | Register an OIDC web client and callback; verify the issuer and intended tenant restriction. Email domain or Workspace membership alone does not supply mapped management roles; qualify the required claim/federation path before enabling access |
+| Google Workspace | Register an OIDC web client and callback; verify the issuer and intended tenant restriction. Email domain or Workspace membership alone does not supply mapped management roles; verify the required claim/federation path before enabling access |
 | Amazon Cognito | Register a user-pool application client and callback; use the user-pool discovery issuer, verify the signed group/role claim and configure that exact claim name and values |
 | Other OpenID Connect provider | Confirm discovery, authorization-code/S256 support, issuer/audience/tenant validation and a signed role claim; do not substitute a SAML-only or generic OAuth registration |
 
