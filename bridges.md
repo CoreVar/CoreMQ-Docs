@@ -10,7 +10,7 @@ Configure TLS, authentication and uploaded trust material as required by the rem
 
 ![Create bridge editor with connection purpose, host, TLS, topic routes and start-on-save controls](assets/bridge-editor.jpg){width=800 style="max-width:100%;height:auto"}
 
-This synthetic September 30 local capture shows the actual editor. **Connection purpose** offers Upstream service, Peer broker, External MQTT broker, Apache Kafka, Azure Event Hubs and CoreStream. MQTT hosts take a hostname/IP without a URL scheme or port; changing TLS does not change the port. Leave **Start this bridge when saved** off while reviewing an unverified destination. **Check settings** validates configuration, not connectivity. Add routes before expecting messages to move.
+**Connection purpose** offers Upstream service, Peer broker, External MQTT broker, Apache Kafka, Azure Event Hubs and CoreStream. MQTT hosts take a hostname/IP without a URL scheme or port; changing TLS does not change the port. Leave **Start this bridge when saved** off while reviewing an unverified destination. **Check settings** validates configuration, not connectivity. Add routes before expecting messages to move.
 
 Validate the configuration, save it, and inspect runtime status. Queue limits, retention, retry limits, maximum hops and message rate are configurable. Do not infer lossless delivery or arbitrary mesh interoperability from a successful connection.
 

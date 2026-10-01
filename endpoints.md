@@ -39,4 +39,4 @@ Distinguish installation input from the runtime certificate store. A package may
 
 ![Endpoint list showing listener hostname, ports, authentication, and Edit/Delete controls in the current CoreMQ UI.](assets/configure-endpoints.jpg){width=800 style="max-width:100%;height:auto"}
 
-Captured in a disposable local build on September 30, 2026; its plaintext loopback evaluation listener is not a production configuration. See [backup](backup-restore.md), [upgrade](upgrade-uninstall.md), and [release limits](release-status.md).
+See [backup](backup-restore.md), [upgrade](upgrade-uninstall.md), and [release limits](release-status.md).
