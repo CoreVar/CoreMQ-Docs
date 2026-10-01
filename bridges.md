@@ -42,3 +42,11 @@ coremq bridges remove <id> --expected-revision <revision>
 Use `--schema` to obtain the request format. Local APIs use `/api/Bridges/Configuration` and `/api/Bridges/Validate`; `/api/Uplinks` and CLI `uplinks` aliases remain compatible. CoreControl uses the existing versioned uplink capabilities. See [remote management](remote-management.md).
 
 To export system events, explicitly match their `$SYS/coremq/v1` filter. Incoming bridges cannot forge local `$SYS` publications; map remote system topics into an ordinary application namespace.
+
+## Uploaded files and cleanup
+
+The file picker supports uploading, selecting and refreshing stored files. Managed files are stored encrypted and are append-only: the current management API and UI do not offer per-file editing, deletion or unused-file cleanup.
+
+Clearing a bridge's file reference or deleting the bridge does **not** delete the uploaded file. Review file ownership and retention before uploading, and do not treat reference removal as credential erasure. A disposable test volume can be removed by its owner after testing; that is separate from supported cleanup of an individual file on a running broker.
+
+Candidate 2229 verified public-CA upload and reference changes on disabled synthetic bridges, including revision checks and reference clearing. It did not qualify private credential replacement, actual bridge traffic, provider authentication or remote management parity. See [release status](release-status.md).
