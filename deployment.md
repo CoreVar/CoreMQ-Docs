@@ -4,7 +4,7 @@ Run CoreMQ in your cloud, your Kubernetes cluster, or locally. Choose a platform
 
 [Choose your deployment](deployment-choice.html){.docs-interactive .docs-immersive}
 
-:::docs-section {#deploy-azure data-docs-section=azure data-docs-filter-cloud=azure}
+:::docs-section {#deploy-azure data-docs-section=azure data-docs-filter-cloud=azure data-docs-filter-database="postgresql sqlserver cosmos"}
 ## Azure
 
 The [Azure Marketplace guide](azure/setup.md) takes you from an existing AKS cluster to your first encrypted message. You provide the cluster, backing database, Redis, DNS and certificate. The Marketplace form uses PostgreSQL; use the database fields and networking controls supplied by the package you install.
@@ -12,7 +12,7 @@ The [Azure Marketplace guide](azure/setup.md) takes you from an existing AKS clu
 For a custom CoreMQ chart, select a relational database or Azure Cosmos DB using the backing-store settings below. Keep the management interface private and expose only the client listener ports you need.
 :::
 
-:::docs-section {#deploy-aws data-docs-section=aws data-docs-filter-cloud=aws}
+:::docs-section {#deploy-aws data-docs-section=aws data-docs-filter-cloud=aws data-docs-filter-database="postgresql sqlserver dynamodb"}
 ## AWS
 
 Obtain the AWS deployment package and version from CoreVar. Use the chart and image supplied for your AWS account and region; cloud images carry their own provider identity and billing configuration.
@@ -33,7 +33,7 @@ kubectl -n coremq get deployments,pods,services
 Use the chart path and namespace from your package. Rendered output can contain secrets: review it locally. If installation times out, inspect the existing deployment before retrying. Confirm pod readiness, certificate validation, a publish/subscribe round trip, authorization denial and persistent state.
 :::
 
-:::docs-section {#deploy-gcp data-docs-section=gcp data-docs-filter-cloud=gcp}
+:::docs-section {#deploy-gcp data-docs-section=gcp data-docs-filter-cloud=gcp data-docs-filter-database="postgresql sqlserver firestore"}
 ## Google Cloud
 
 Obtain the Google Cloud package from CoreVar for your project. Prepare a GKE cluster, Redis, persistent state, TLS and DNS. Choose PostgreSQL, an existing SQL Server database, or Firestore using the database settings exposed by that package.
@@ -43,7 +43,7 @@ Use its supplied service name, usage metric, consumption-tracking label, image d
 For managed PostgreSQL, configure the package's Cloud SQL connection settings. For SQL Server, provide an existing reachable database and protected connection-string Secret. For Firestore, grant the broker's workload identity access to the selected project and collection.
 :::
 
-:::docs-section {#deploy-kubernetes data-docs-section=kubernetes data-docs-filter-cloud=kubernetes}
+:::docs-section {#deploy-kubernetes data-docs-section=kubernetes data-docs-filter-cloud=kubernetes data-docs-filter-database="postgresql sqlserver cosmos"}
 ## Your Kubernetes cluster
 
 Use the provider-neutral runtime chart and immutable image supplied with your release. Prepare a PostgreSQL or SQL Server database, or Azure Cosmos DB when using the chart's Cosmos mode, alongside Redis, persistent shared state, administrator credentials and a TLS certificate.
@@ -51,7 +51,7 @@ Use the provider-neutral runtime chart and immutable image supplied with your re
 The chart references your existing dependencies and Secrets. Render it first, review image coordinates and Service exposure, then install into your chosen namespace. Use private management access and verify the client listener's DNS, certificate and message permissions.
 :::
 
-:::docs-section {#deploy-local data-docs-section=local data-docs-filter-cloud=local}
+:::docs-section {#deploy-local data-docs-section=local data-docs-filter-cloud=local data-docs-filter-database="sqlite"}
 ## Local or Docker
 
 Follow [Send your first message](get-started.md). The local edition uses SQLite and a writable data directory. Keep that directory across container replacement, bind management access to the intended local interface, and replace initial administrator defaults.
@@ -105,7 +105,7 @@ persistence:
 Put the account credential in the Secret field specified by your chart. Cosmos provides the configuration document store; Redis remains the cloud messaging backplane. Review account throughput, backups and network access before connecting the broker.
 :::
 
-:::docs-section {#database-dynamodb data-docs-section=dynamodb data-docs-filter-database=dynamodb data-docs-filter-cloud=aws}
+:::docs-section {#database-dynamodb data-docs-section=dynamodb data-docs-filter-database=dynamodb data-docs-filter-cloud=aws data-docs-filter-database="postgresql sqlserver dynamodb"}
 ## DynamoDB
 
 Use the AWS chart's DynamoDB persistence mode:
@@ -118,7 +118,7 @@ persistence:
 Create the table named by your package, with string keys `PK` and `SK`. The runtime default table name is `CoreMq`. Grant the broker's IRSA identity the required item read, query, write and delete access to that table. Credentials come from the workload identity. Leave `persistence.dynamodb.serviceUrl` empty for AWS; it is an override for a local test endpoint. Redis remains the messaging backplane.
 :::
 
-:::docs-section {#database-firestore data-docs-section=firestore data-docs-filter-database=firestore data-docs-filter-cloud=gcp}
+:::docs-section {#database-firestore data-docs-section=firestore data-docs-filter-database=firestore data-docs-filter-cloud=gcp data-docs-filter-database="postgresql sqlserver firestore"}
 ## Firestore
 
 Use the Google Cloud chart's Firestore mode and select your project and collection:
@@ -134,7 +134,7 @@ persistence:
 Configure the broker's workload identity for access to that project and collection. Firestore provides the configuration document store; keep Redis for the cloud messaging backplane. Review access, retention and backups before installation.
 :::
 
-:::docs-section {#database-sqlite data-docs-section=sqlite data-docs-filter-database=sqlite data-docs-filter-cloud=local}
+:::docs-section {#database-sqlite data-docs-section=sqlite data-docs-filter-database=sqlite data-docs-filter-cloud=local data-docs-filter-database="sqlite"}
 ## SQLite
 
 The local edition stores its database in the broker's persistent local data directory. Keep a writable volume across restarts and container replacements, and take a consistent [backup](backup-restore.md) before upgrading. Use this single-broker path for local or standalone deployments.
