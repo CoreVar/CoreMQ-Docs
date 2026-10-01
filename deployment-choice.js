@@ -17,12 +17,12 @@ export function mount(root, context) {
         root.querySelector('[data-cloud-label]').textContent = platforms[cloud] || 'All platforms';
         root.querySelector('[data-database-label]').textContent = databases[database] || 'All databases';
         root.querySelector('.selection-summary').textContent = cloud || database
-            ? `Showing ${platforms[cloud] || 'all platforms'} · ${databases[database] || 'all databases'}. Shared setup guidance remains visible.`
+            ? `Showing ${platforms[cloud] || 'all platforms'} Â· ${databases[database] || 'all databases'}. Shared setup guidance remains visible.`
             : 'All deployment documentation is shown.';
         root.host.removeAttribute('data-choice-animation');
         clearTimeout(animation);
         if (!context.motion.matches) {
-            requestAnimationFrame(() => { if (!context.signal.aborted) root.host.setAttribute('data-choice-animation','true'); });
+            requestAnimationFrame(() => { if (!context.signal.aborted && !context.motion.matches) root.host.setAttribute('data-choice-animation','true'); });
             animation = setTimeout(() => root.host.removeAttribute('data-choice-animation'),1100);
         }
     };
