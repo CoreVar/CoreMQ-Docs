@@ -36,6 +36,12 @@ Candidate 2177's role-policy **Edit** opens the corrected modal; local browser C
 
 An allow from one role wins over a deny from another. Test combined roles before granting them. Removing administrative roles preserves other roles; verify effective access after the change.
 
+## Renaming a local role
+
+Refresh the role before changing its name and read it back after saving. The current native role-name update has no revision precondition, so avoid concurrent renames. Revision checks on role policies and other supported resources do not protect the role-name update itself.
+
+Candidate 2229 verified create, read and rename on an owned empty role, plus negative request contracts. That scope does not qualify privilege grants or remote-management parity. See [release status](release-status.md).
+
 ## Organization application roles
 
 Organization identities are independent of local accounts. Assign roles in the provider for this broker application, then map exact application-role values to permitted CoreMQ management roles. Matching names/emails do not merge accounts or inherit local policies. See [sign-in providers](sign-in-providers.md).
