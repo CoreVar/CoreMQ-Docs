@@ -34,6 +34,7 @@ Select the documentation version that matches **Configure > About**. Use the [ve
 - [Endpoints and certificates](endpoints.md): listener security and connection settings.
 - [Sizing and availability](sizing.md): workload measurements and capacity planning.
 - [CLI reference](cli.md): sign-in, request schemas and command examples.
+- [Management capabilities and compatibility](management-capabilities.md): routes, versions and verification.
 
 ## Configure messaging and access
 

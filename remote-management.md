@@ -20,6 +20,9 @@ A compatible CoreVar CLI host supplies the selected route and token to `corevar 
 
 ## Compatible portal controls
 
+See the [dated management capability matrix](management-capabilities.md) for the
+current source inventory, automated evidence and installed-deployment checks.
+
 Use compatible versions of CoreVar Portal, its CoreMQ management module and the broker. The selected deployment advertises the capabilities and policy groups available to your account. Update the portal controls alongside the broker when introducing a new configuration workflow.
 
 The unified directory uses `coremq.security.identity-directory.read` version 1 with configuration-read permission. Compatible portals retain the individual views when an older broker does not advertise it. Results are paged; if the inventory changes between pages, reload the list. Directory visibility grants no permission to edit an entry.
