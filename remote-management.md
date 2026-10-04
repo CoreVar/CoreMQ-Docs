@@ -24,6 +24,8 @@ Use compatible versions of CoreVar Portal, its CoreMQ management module and the 
 
 The unified directory uses `coremq.security.identity-directory.read` version 1 with configuration-read permission. Compatible portals retain the individual views when an older broker does not advertise it. Results are paged; if the inventory changes between pages, reload the list. Directory visibility grants no permission to edit an entry.
 
-If a command times out, inspect its status before retrying: it may still execute remotely. Revision and idempotency checks protect configuration changes. Never send a secret through an unprotected command payload or substitute a browser workstation path for a managed upload.
+For user access changes, select the user with `users list` and obtain its current revision with `users get <id>`. Lists omit revisions; older get responses may omit them too. Never substitute zero. See the [CLI user access workflow](cli.md#read-and-update-user-access) for revision and operation-ID handling.
+
+If a command times out, retain its operation ID and inspect its status before another submission: it may still execute remotely. Revision checks reject stale changes, but an operation ID does not promise durable exactly-once execution. Never send a secret through an unprotected command payload or substitute a browser workstation path for a managed upload.
 
 Provider changes can require a broker restart. Apply them during a planned maintenance window and confirm runtime behavior after the restart.

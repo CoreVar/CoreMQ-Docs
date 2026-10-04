@@ -101,7 +101,7 @@ Commands below marked **JSON** take `--file`, `--file -`, or `--data`.
 | `endpoints certificate upload <id> --file <pfx>` | Upload binary, passwordless PKCS#12; no stdin |
 | `endpoints certificate refresh <id>` | Refresh certificate |
 | `users list` | List users |
-| `users get <id>` | Read user |
+| `users get <id>` | Read user and current write revision on compatible brokers |
 | `users add` | **JSON**: create user |
 | `users remove <id>` | Delete user |
 | `users enable <id>` | Enable user |
@@ -230,6 +230,74 @@ and advice. It excludes response bodies, tokens, passwords, configuration files
 and message payloads. `--report` saves the same JSON printed to stdout. Broker
 logs remain in the deployment's existing logging system; the CLI cannot retrieve
 logs through an API the broker does not expose.
+
+## Read and update user access
+
+On a selected CoreControl connection, `corevar coremq` supports the canonical
+read commands `users list/get`, `users roles list`, `roles list/get`,
+global/user/role `policies list/get`, `connections list`, and `subscriptions list`.
+They use the selected deployment and credentials. A failed or denied read returns
+an error without switching to a direct broker connection.
+
+Paged reads buffer at most 40 pages of 25 records before printing a complete
+result. They reject malformed records, duplicates, wrong-owner policies and
+unsupported policy types. A changing catalog can invalidate a scan; it is not an
+atomic snapshot. Account reads require the management status field, and policy
+reads require a type discriminator. Use a compatible broker if an older response
+omits these fields. Subscription reads include all client IDs or return an
+explicit response-size error. Existing `control` aliases remain available.
+
+### Read the selected user's revision
+
+Choose a user with `users list`, then call `users get <id>` to read its current
+`revision`. The list stays lightweight and omits revisions on both direct and
+CoreControl routes. Older get responses may also omit `revision`; never substitute
+zero. `status` and `users roles list` are not revision reads. Legacy
+`control users-list` is not required for this workflow.
+
+```powershell
+$userId = "USER_ID_FROM_USERS_LIST"
+$userJson = corevar coremq users get $userId
+if ($LASTEXITCODE -ne 0) { throw "User revision read failed." }
+$user = $userJson | ConvertFrom-Json
+if ($user.id -ne $userId -or $null -eq $user.revision) { throw "Selected user has no write revision." }
+$revision = [long]$user.revision
+if ($revision -lt 0) { throw "Invalid user revision." }
+$operationId = [guid]::NewGuid().ToString("N") # Once for this intended change.
+corevar coremq users enable $userId --expected-revision $revision --operation-id $operationId
+```
+
+`users enable`, `users disable`, `users roles update`, and `users admin grant/revoke`
+require a current `--expected-revision` and stable `--operation-id` through
+CoreControl. Both `SecurityAdministration` and `HighImpactOperations` must be
+enabled by the broker policy. Read the revision again and choose a new operation
+ID for each separate intended change; another writer can invalidate your read
+before submission. A stale revision is rejected without fetching a replacement.
+
+For a role delta, save `roles.json` with existing role names, for example
+`{ "add": ["Device operator"], "remove": ["Legacy operator"] }`, then run:
+
+```powershell
+corevar coremq users roles update $userId --file roles.json --expected-revision $revision --operation-id $operationId
+corevar coremq users roles update --schema
+```
+
+Each role array accepts at most 100 nonblank, unique names. Administrative grant
+ensures `User Manager` and `Endpoint Manager`; revoke removes only those roles,
+preserving unrelated memberships. An already-satisfied grant/revoke succeeds
+without changing the revision, but still rejects a stale supplied revision.
+Enable/disable and grant/revoke have no JSON body and reject `--schema`.
+
+Standalone `coremq` and the CoreVar module on a direct connection accept these
+flags optionally. Use a revision from that same broker and user. The direct
+operation ID is correlation only; it does not provide durable deduplication.
+Omitting the revision removes the caller-supplied stale-snapshot precondition.
+
+Queue acceptance does not mean a write has completed. If a wait times out or is
+interrupted, retain the operation ID and inspect the queued command in the
+deployment's command history before submitting again. Stopping a wait does not
+cancel the write. Do not automatically retry with a new operation ID or assume
+durable exactly-once execution. Read back the user after a completed change.
 
 ## Interactive shell and compatibility
 
