@@ -6,6 +6,11 @@ convention for broker information, rather than an MQTT-defined event schema.
 
 ## Subscriptions
 
+CoreDM connects to CoreMQ as an MQTT-capable device management client. With the
+appropriate subscribe policy, it can consume client-connected and
+client-disconnected system events. CoreMQ does not connect to CoreDM; CoreDM opens
+the MQTT connection and subscribes to the desired filters.
+
 | Interest | Filter |
 | --- | --- |
 | All CoreMQ events | `$SYS/coremq/v1/#` |

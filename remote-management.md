@@ -2,6 +2,10 @@
 
 CoreControl provides the backplane for authorized remote commands to a CoreMQ deployment. Portal login and support access do not replace the broker's own local login.
 
+CoreVar Portal manages a CoreMQ deployment **through CoreControl**. This is
+separate from a browser opening the broker's local management UI; there is no
+direct CoreMQ-to-Portal management connection.
+
 ## Register, verify and unregister
 
 The connector is compiled into cloud builds and disabled by default. Local edition excludes it. Deploy first, then create a deployment enrollment in the Management Portal using an authorized organization/product role. Save the short-lived bootstrap artifact in a protected file/Secret, never in arguments, environment values or tickets. Mount a separate Base64-encoded 32-byte protection key. Configure the trusted service origin, environment, audience and complete gateway allowlist from the approved deployment contract; DEV URLs must not be substituted for PROD.

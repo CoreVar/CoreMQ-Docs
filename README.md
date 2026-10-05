@@ -2,6 +2,8 @@
 
 Connect devices, manage messaging and operate your broker. Choose a task to get started, or browse the guides by topic.
 
+CoreMQ product usage training, tutorials and labs are free.
+
 ## Start with a task
 
 ::::doc-cards
@@ -67,7 +69,7 @@ Select the documentation version that matches **Configure > About**. Use the [ve
 
 ## How the parts fit
 
-![MQTT clients use broker listeners; database and Redis support cloud state, bridges forward selected messages, and CoreControl carries outbound authorized management.](assets/coremq-architecture.png){width=800 style="max-width:100%;height:auto"}
+![CoreDM and other MQTT clients connect to CoreMQ. CoreVar Portal manages CoreMQ through CoreControl. Database and Redis support state; bridges forward selected messages.](assets/coremq-architecture.svg){width=800 style="max-width:100%;height:auto"}
 
 The CLI uses the HTTP(S) management origin. Redis is the cloud backplane; bridges forward selected messages. CoreControl carries authorized remote commands. These paths have different credentials and permissions.
 
