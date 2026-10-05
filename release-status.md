@@ -11,6 +11,21 @@ Select the documentation version that matches your broker. Find the broker versi
 
 Keep the image digest, chart version and database schema information with your deployment records. The database and certificate fields in a Marketplace form can differ from a custom chart; follow the README included with that package.
 
+## Training, support and software billing
+
+Product usage training, documentation, tutorials and labs are free. Support is
+provided through shared CoreVar support agreements for eligible purchased
+products; use the published purchase route or request a quote for negotiated
+scope. There is no separate CoreMQ paid how-to lab or fleet allowance.
+
+For the hourly Marketplace offer, include billable broker pod-hours in your
+software estimate and review the selected plan's current price and terms before
+purchase. Cluster compute, databases, Redis, storage and networking are separate
+cloud costs. Microsoft's [container offer billing models](https://learn.microsoft.com/en-us/partner-center/marketplace-offers/marketplace-containers#licensing-options)
+include per-pod pricing reported hourly. Follow your actual offer's metering rules
+for standby replicas, replacement pods and upgrade overlap; this guide does not
+activate a new price or license agreement.
+
 ## Match management tools
 
 Use the broker's installed CLI help and request schemas. For remote administration, keep CoreVar Portal, the CoreMQ module and the broker on compatible package versions. The deployment's advertised capabilities determine which remote controls are available.
